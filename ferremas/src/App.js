@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Importa 'Routes' en lugar de 'Switch'
 import Catalogo from './Catalogo';
+import MyComponent from './MyComponent';
 
 function App() {
   return (
@@ -13,13 +14,14 @@ function App() {
             <ul>
               <li><Link to="/">Inicio</Link></li>
               <li><Link to="/catalogo">Catálogo</Link></li>
-              <li><Link to="/contacto">Contacto</Link></li>
+              <li><Link to="/MyComponent">Herramienta</Link></li> {/* Cambiado a /MyComponent */}
             </ul>
           </nav>
         </header>
         <main>
           <Routes> {/* Reemplaza Switch por Routes */}
             <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/MyComponent" element={<MyComponent />} />
           </Routes>
         </main>
         <footer>
@@ -29,4 +31,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;

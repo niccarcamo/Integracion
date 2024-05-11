@@ -4,7 +4,11 @@ body {
   margin: 0;
   padding: 0;
 }
-
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Hace que el contenido llene el viewport mínimo */
+}
 header {
   background-color: #333;
   color: #fff;
@@ -55,4 +59,6 @@ footer {
   color: #fff;
   text-align: center;
   padding: 20px;
+  margin-top: 540px;
 }
+

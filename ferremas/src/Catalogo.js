@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './catalogo.css';
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
+  const [categoriasDesplegadas, setCategoriasDesplegadas] = useState(false);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Nuevo estado para controlar la categoría seleccionada
 
   useEffect(() => {
     axios.get('http://localhost:3001/productos')
@@ -14,16 +17,45 @@ const Catalogo = () => {
       });
   }, []);
 
+  const toggleCategorias = () => {
+    setCategoriasDesplegadas(!categoriasDesplegadas);
+  };
+
+  const handleCategoriaSeleccionada = (categoria) => {
+    setCategoriaSeleccionada(categoria);
+    setCategoriasDesplegadas(false); // Ocultar la lista de categorías al seleccionar una categoría
+  };
+
   return (
-    <div>
-      <h1>Catalogo de Productos</h1>
-      <ul>
-        {productos.map(producto => (
-          <li key={producto.idProducto}>{producto.nombreProducto}</li>
-        ))}
-      </ul>
+    <div className="container">
+      <h1 className="heading">Catálogo de Productos</h1>
+      <div className="categoriasContainer">
+        <button onClick={toggleCategorias} className="categoriasButton">Categorías</button>
+        {categoriasDesplegadas && (
+          <ul className="categoriasList">
+            <li className="categoriaItem" onClick={() => handleCategoriaSeleccionada('Herramientas')}>Herramientas</li>
+            <li className="categoriaItem" onClick={() => handleCategoriaSeleccionada('Baño')}>Baño</li>
+            <li className="categoriaItem" onClick={() => handleCategoriaSeleccionada('Cocina')}>Cocina</li>
+            <li className="categoriaItem" onClick={() => handleCategoriaSeleccionada('Dormitorio')}>Dormitorio</li>
+            <li className="categoriaItem" onClick={() => handleCategoriaSeleccionada('Jardín')}>Jardín</li>
+            <li className="categoriaItem" onClick={() => handleCategoriaSeleccionada('Decoración')}>Decoración</li>
+          </ul>
+        )}
+      
+      </div>
+      {categoriaSeleccionada && ( // Mostrar la imagen solo si hay una categoría seleccionada
+        <div className="imagenContainer">
+          <img src={`ruta/a/${categoriaSeleccionada}.jpg`} alt={categoriaSeleccionada} className="imagenCategoria" />
+        </div>
+      )}
     </div>
   );
 };
+
+
+
+  
+
+
 
 export default Catalogo;
