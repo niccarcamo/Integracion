@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './catalogo.css';
+import taladro from'./assets/Taladro.jpg';
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
@@ -26,6 +27,11 @@ const Catalogo = () => {
     setCategoriasDesplegadas(false); // Ocultar la lista de categorías al seleccionar una categoría
   };
 
+  // Objeto para mapear categorías a imágenes
+  const imagenesCategorias = {
+    Herramientas: taladro, // Agrega más categorías e imágenes aquí si es necesario
+  };
+
   return (
     <div className="container">
       <h1 className="heading">Catálogo de Productos</h1>
@@ -41,21 +47,14 @@ const Catalogo = () => {
             <li className="categoriaItem" onClick={() => handleCategoriaSeleccionada('Decoración')}>Decoración</li>
           </ul>
         )}
-      
       </div>
       {categoriaSeleccionada && ( // Mostrar la imagen solo si hay una categoría seleccionada
         <div className="imagenContainer">
-          <img src={`ruta/a/${categoriaSeleccionada}.jpg`} alt={categoriaSeleccionada} className="imagenCategoria" />
+          <img src={imagenesCategorias[categoriaSeleccionada]} alt={categoriaSeleccionada} className="imagenCategoria" />
         </div>
       )}
     </div>
   );
 };
-
-
-
-  
-
-
 
 export default Catalogo;
