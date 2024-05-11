@@ -1,38 +1,22 @@
-# Integracion
-// App.js
-import React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import Inicio from './Inicio';
-import Catalogo from './Catalogo';
+iniciar la base de datos:
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <header>
-          <h1>Bienvenido a Ferretería XYZ</h1>
-          <nav>
-            <ul>
-              <li><Link to="/">Inicio</Link></li>
-              <li><Link to="/catalogo">Catálogo</Link></li>
-              <li><Link to="/contacto">Contacto</Link></li>
-            </ul>
-          </nav>
-        </header>
-        <main>
-          <Switch>
-            <Route path="/" exact component={Inicio} />
-            <Route path="/catalogo" component={Catalogo} />
-          </Switch>
-        </main>
-        <footer>
-          <p>&copy; 2024 Ferretería XYZ. Todos los derechos reservados.</p>
-        </footer>
-      </div>
-    </Router>
-  );
-}
+1.- crear un usuario en mysql:    CREATE USER 'nuevo_usuario'@'localhost' IDENTIFIED WITH mysql_native_password BY 'tu_contraseña';
 
-export default App;
+2.- dar privilegios al usuario en mysql:   GRANT ALL PRIVILEGES ON *.* TO 'nuevo_usuario'@'localhost' WITH GRANT OPTION;
 
+
+
+3.-en visual studio dirigirse a la carpeta servidor-backend y cambiar el usuario y contraseña:
+
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'usuario',
+  password: 'contraseña',
+  database: 'ferremas'
+});
+
+
+4.-en la terminal de visual : 1.  cd ferremas     2.    cd servidor-backend    3.    node server.js
+
+
+5.- sin cerrar la terminal abres otra y: 1.      cd ferremas        2.     npm start
