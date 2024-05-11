@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function Catalogo() {
+const Catalogo = () => {
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/productos')
+      .then(response => {
+        setProductos(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener productos:', error);
+      });
+  }, []);
+
   return (
-    <section className="productos">
-      <h2>Nuestros Productos Destacados</h2>
-      <div className="producto">
-        <a href="/catalogo/producto1">
-          <img src="producto1.jpg" alt="Producto 1" />
-          <h3>Producto 1</h3>
-          <p>Descripción del producto 1.</p>
-        </a>
-      </div>
-      <div className="producto">
-        <a href="/catalogo/producto2">
-          <img src="producto2.jpg" alt="Producto 2" />
-          <h3>Producto 2</h3>
-          <p>Descripción del producto 2.</p>
-        </a>
-      </div>
-      {/* Agrega más productos aquí */}
-    </section>
+    <div>
+      <h1>Catalogo de Productos</h1>
+      <ul>
+        {productos.map(producto => (
+          <li key={producto.idProducto}>{producto.nombreProducto}</li>
+        ))}
+      </ul>
+    </div>
   );
-}
+};
 
 export default Catalogo;

@@ -8,7 +8,7 @@ function App() {
     <Router>
       <div className="App">
         <header>
-          <h1>Bienvenido a Ferretería XYZ</h1>
+          <h1>Bienvenido a Ferretería Ferremas</h1>
           <nav>
             <ul>
               <li><Link to="/">Inicio</Link></li>
@@ -23,7 +23,7 @@ function App() {
           </Routes>
         </main>
         <footer>
-          <p>&copy; 2024 Ferretería XYZ. Todos los derechos reservados.</p>
+          <p>&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
         </footer>
       </div>
     </Router>
