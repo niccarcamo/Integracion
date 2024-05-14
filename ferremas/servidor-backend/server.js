@@ -8,8 +8,8 @@ const PORT = 3001; // Define el puerto en el que deseas que escuche el servidor
 
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'tito',
-  password: 'Tito123',
+  user: 'general',
+  password: 'admin',
   database: 'ferremas'
 });
 
