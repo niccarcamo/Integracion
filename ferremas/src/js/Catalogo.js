@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './catalogo.css';
-import taladro from'./assets/Taladro.jpg';
+import '../css/catalogo.css'
+import taladro from'../assets/Taladro.jpg';
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);

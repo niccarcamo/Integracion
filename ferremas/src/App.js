@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
+import './css/App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Importa 'Routes' en lugar de 'Switch'
-import Catalogo from './Catalogo';
-import MyComponent from './MyComponent';
+import Catalogo from './js/Catalogo';
+import MyComponent from './js/MyComponent';
 
 function App() {
   return (
