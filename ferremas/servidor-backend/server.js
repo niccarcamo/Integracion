@@ -25,6 +25,7 @@ app.use(cors({
   origin: 'http://localhost:3000'
 }));
 
+// Ruta para obtener todos los productos
 app.get('/productos', (req, res) => {
   db.query('SELECT * FROM Producto', (err, result) => {
     if (err) {
@@ -32,7 +33,37 @@ app.get('/productos', (req, res) => {
       res.status(500).send('Error al obtener productos');
       return;
     }
-    res.status(200).send(result);
+    const productos = result.map(producto => {
+      if (producto.imagenProducto) {
+        // Convertir imagen BLOB a base64
+        producto.imagenProducto = 'data:image/webp;base64,' + Buffer.from(producto.imagenProducto, 'binary').toString('base64');
+      }
+      return producto;
+    });
+    res.status(200).send(productos);
+  });
+});
+
+// Ruta para buscar productos por nombre
+app.get('/buscar-productos', (req, res) => {
+  const nombreProducto = req.query.nombre;
+  const query = `SELECT * FROM Producto WHERE nombreProducto LIKE ?`;
+  const values = [`%${nombreProducto}%`];
+
+  db.query(query, values, (err, result) => {
+    if (err) {
+      console.error('Error al buscar productos:', err);
+      res.status(500).send('Error al buscar productos');
+      return;
+    }
+    const productos = result.map(producto => {
+      if (producto.imagenProducto) {
+        // Convertir imagen BLOB a base64
+        producto.imagenProducto = 'data:image/webp;base64,' + Buffer.from(producto.imagenProducto, 'binary').toString('base64');
+      }
+      return producto;
+    });
+    res.status(200).send(productos);
   });
 });
 

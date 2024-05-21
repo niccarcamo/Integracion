@@ -1,0 +1,38 @@
+.busqueda{
+    text-align: center;
+    padding: 20px;
+    background-color: #F1E932;
+}
+
+.input_buscar{
+    font-size: 17px;
+    color: #323133;
+    text-align: center; 
+    line-height: 1.5;
+    background-color: #f0eaea;
+    padding: 2px 24px 2px 24px;
+    margin: 4px;
+    border: 2px solid #323133;
+    border-radius: 14px;
+    box-shadow: 2px 2px 5px #aaa;
+    transition: .8s;
+}
+.input_buscar::placeholder {
+    color: #5b5a5c;
+}
+.input_buscar:hover {
+    border-color: #5b5a5c;
+    background-color: #f7f7f7;
+    border: 2px solid #686769;
+    box-shadow: 0 0 10px #8b8a8a;
+  }
+.input_buscar:focus {
+    color: #f0eaea;
+    background-color: #afaeaf;
+    border-color: #F1E932;
+    box-shadow: 0 0 10px #5c5c5c;
+    border: 2px solid #f0eaea;
+}
+.input_buscar:focus::placeholder {
+    color: #f0eaea;
+}

@@ -34,9 +34,6 @@ nav ul li a {
   text-decoration: none;
 }
 
-main {
-  padding: 20px;
-}
 
 .productos {
   display: grid;
