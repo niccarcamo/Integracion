@@ -36,3 +36,60 @@
 .input_buscar:focus::placeholder {
     color: #f0eaea;
 }
+.carrito-boton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .carrito-boton:hover {
+    background-color: #0056b3;
+  }
+  
+  .carrito-desplegado {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .carrito-desplegado ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .carrito-desplegado li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .carrito-desplegado button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .carrito-desplegado button:hover {
+    background-color: #c82333;
+  }
+  
