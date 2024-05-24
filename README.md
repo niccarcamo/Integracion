@@ -1,30 +1,27 @@
 iniciar la base de datos:
 
-0.- algunos datos para poblar la base:
+0.- Algunos datos para poblar la base:
 -----------------------------------------------------------------------------------------------------------------------
 -- Insertar datos en la tabla Categoria
+
 INSERT INTO Ferremas.Categoria (nombreCategoria) VALUES ('Herramientas');
 INSERT INTO Ferremas.Categoria (nombreCategoria) VALUES ('Materiales');
 INSERT INTO Ferremas.Categoria (nombreCategoria) VALUES ('Electrodomésticos');
 
 -- Insertar datos en la tabla Producto
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, Categoria_idCategoria) 
-VALUES ('Martillo', 'Martillo de acero resistente', 20, 50, 1);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, Categoria_idCategoria) 
-VALUES ('Clavos', 'Clavos de hierro galvanizado', 5, 100, 1);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Martillo', 'Martillo de acero resistente', 15000, 50, "https://drive.google.com/file/d/1SMhQcxC86LQqOC-X75DFT5tCQ40DjvKO/view?usp=drive_link", 1);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, Categoria_idCategoria) 
-VALUES ('Taladro', 'Taladro eléctrico inalámbrico', 80, 30, 1);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Clavos', 'Clavos de hierro galvanizado', 3000, 100, "https://drive.google.com/file/d/1uZAziQ97MZueH6F5ycYDAUd4xy23AeJz/view?usp=drive_link", 1);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, Categoria_idCategoria) 
-VALUES ('Cemento', 'Cemento Portland de alta calidad', 15, 80, 2);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Taladro', 'Taladro eléctrico inalámbrico', 80000, 30, "https://drive.google.com/file/d/1kSYsHGeXGh_0RBitbZnunlCYis6HFEfH/view?usp=drive_link", 1);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, Categoria_idCategoria) 
-VALUES ('Ladrillos', 'Ladrillos de arcilla cocida', 0.5, 200, 2);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Cemento', 'Cemento Portland de alta calidad', 15000, 80, "https://drive.google.com/file/d/1zXnGxMijk_JY5IIPbkG12kPu75S2gJGe/view?usp=drive_link", 2);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, Categoria_idCategoria) 
-VALUES ('Tostadora', 'Tostadora de pan automática', 25, 50, 3);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Madera', 'Madera de pino', 5000, 200, "https://drive.google.com/file/d/1hKIF7abs7IHi0yyYckYB_-tGmzr2yZPk/view?usp=drive_link", 2);
+
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Sierra Circular', 'Cierra Circular Makita', 150000, 20, "https://drive.google.com/file/d/1PuZAXf-pInxYDkb2yuAmC7O-g4dpuKIN/view?usp=drive_link", 3);
+
 --------------------------------------------------------------------------------------------------------------------
 
 Pasos para conectar la Base de Datos Ferremas:
