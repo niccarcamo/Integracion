@@ -10,17 +10,18 @@ INSERT INTO Ferremas.Categoria (nombreCategoria) VALUES ('Electrodomésticos');
 
 -- Insertar datos en la tabla Producto
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Martillo', 'Martillo de acero resistente', 15000, 50, "https://drive.google.com/file/d/1SMhQcxC86LQqOC-X75DFT5tCQ40DjvKO/view?usp=drive_link", 1);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Martillo', 'Martillo de acero resistente', 8000, 50, "http://imgfz.com/i/DWLt0uw.jpeg", 1);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Clavos', 'Clavos de hierro galvanizado', 3000, 100, "https://drive.google.com/file/d/1uZAziQ97MZueH6F5ycYDAUd4xy23AeJz/view?usp=drive_link", 1);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Clavos', 'Clavos de hierro galvanizado', 3000, 100, "http://imgfz.com/i/6JmnXRe.png", 1);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Taladro', 'Taladro eléctrico inalámbrico', 80000, 30, "https://drive.google.com/file/d/1kSYsHGeXGh_0RBitbZnunlCYis6HFEfH/view?usp=drive_link", 1);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Taladro', 'Taladro eléctrico inalámbrico', 80000, 30, "http://imgfz.com/i/7h89pwY.jpeg", 1);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Cemento', 'Cemento Portland de alta calidad', 15000, 80, "https://drive.google.com/file/d/1zXnGxMijk_JY5IIPbkG12kPu75S2gJGe/view?usp=drive_link", 2);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Pintura', 'Pintura Acrizinc', 15000, 100, "http://imgfz.com/i/jvMlLIQ.jpeg
+", 2);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Madera', 'Madera de pino', 5000, 200, "https://drive.google.com/file/d/1hKIF7abs7IHi0yyYckYB_-tGmzr2yZPk/view?usp=drive_link", 2);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Madera', 'Madera de pino', 5000, 200, "http://imgfz.com/i/zGanqJ5.jpeg", 2);
 
-INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Sierra Circular', 'Cierra Circular Makita', 150000, 20, "https://drive.google.com/file/d/1PuZAXf-pInxYDkb2yuAmC7O-g4dpuKIN/view?usp=drive_link", 3);
+INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Sierra Circular', 'Cierra Circular Makita', 150000, 20, "http://imgfz.com/i/lX9hiCg.jpeg", 3);
 
 --------------------------------------------------------------------------------------------------------------------
 
