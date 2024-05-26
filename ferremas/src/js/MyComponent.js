@@ -107,7 +107,7 @@ function MyComponent() {
                 {producto.imagenProducto && (
                   <img src={producto.imagenProducto} alt={producto.nombreProducto} className="product-image" />
                 )}
-                <button onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
+                <button class="agregar_carrito" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
               </div>
             </div>
           </li>

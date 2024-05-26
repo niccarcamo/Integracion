@@ -25,6 +25,8 @@ app.use(cors({
   origin: 'http://localhost:3000'
 }));
 
+app.use(express.json()); // Middleware para parsear JSON
+
 // Ruta para obtener todos los productos
 app.get('/productos', (req, res) => {
   db.query('SELECT * FROM Producto', (err, result) => {
@@ -33,14 +35,7 @@ app.get('/productos', (req, res) => {
       res.status(500).send('Error al obtener productos');
       return;
     }
-    const productos = result.map(producto => {
-      if (producto.imagenProducto) {
-        // Convertir imagen BLOB a base64
-        producto.imagenProducto = 'data:image/webp;base64,' + Buffer.from(producto.imagenProducto, 'binary').toString('base64');
-      }
-      return producto;
-    });
-    res.status(200).send(productos);
+    res.status(200).send(result);
   });
 });
 
@@ -56,14 +51,27 @@ app.get('/buscar-productos', (req, res) => {
       res.status(500).send('Error al buscar productos');
       return;
     }
-    const productos = result.map(producto => {
-      if (producto.imagenProducto) {
-        // Convertir imagen BLOB a base64
-        producto.imagenProducto = 'data:image/webp;base64,' + Buffer.from(producto.imagenProducto, 'binary').toString('base64');
-      }
-      return producto;
-    });
-    res.status(200).send(productos);
+    res.status(200).send(result);
+  });
+});
+
+// Ruta para insertar un producto
+app.post('/insertarProducto', (req, res) => {
+  const { nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria } = req.body;
+
+  const sql = `INSERT INTO Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) 
+               VALUES (?, ?, ?, ?, ?, ?)`;
+
+  const values = [nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria];
+
+  db.query(sql, values, (err, results) => {
+    if (err) {
+      console.error('Error insertando datos:', err.stack);
+      res.status(500).send('Error insertando datos');
+      return;
+    }
+    console.log('Producto insertado con id:', results.insertId);
+    res.status(200).send('Producto insertado con id: ' + results.insertId);
   });
 });
 
