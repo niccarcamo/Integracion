@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/MyComponent.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 function MyComponent() {
   const [nombre, setNombre] = useState('');
@@ -79,6 +81,16 @@ function MyComponent() {
     });
   };
 
+  const aumentarCantidad = (idProducto) => {
+    setCarrito(prevCarrito => 
+      prevCarrito.map(item =>
+        item.idProducto === idProducto
+          ? { ...item, cantidad: item.cantidad + 1, total: item.total + item.precioProducto }
+          : item
+      )
+    );
+  };
+
   const calcularTotal = () => {
     return carrito.reduce((total, producto) => total + producto.total, 0);
   };
@@ -86,13 +98,37 @@ function MyComponent() {
   return (
     <div>
       <div className="busqueda">
-        <input 
-          type="text" 
-          value={nombre} 
-          onChange={(e) => setNombre(e.target.value)} 
-          placeholder="Ingrese nombre del producto" 
-          className="input_buscar" 
-        />
+      <img className="Logo" src="/assets/Logoferremas.png" alt="Logo Ferremas" />
+        <div className="input-container">
+          <input 
+            type="text" 
+            value={nombre} 
+            onChange={(e) => setNombre(e.target.value)} 
+            placeholder="Ingrese nombre del producto" 
+            className="input_buscar" 
+          />
+        </div>
+        <div className="carrito">
+        <button className="carrito-boton" onClick={() => setMostrarCarrito(!mostrarCarrito)}><FontAwesomeIcon icon="fa-solid fa-cart-shopping" className="icono_carrito" style={{color: "#323133",}} /></button>
+        {mostrarCarrito && (
+          <div className="carrito-desplegado">
+            <ul>
+              {carrito.map((producto) => (
+                <li key={producto.idProducto}>
+                  {producto.nombreProducto} - ${producto.precioProducto} x {producto.cantidad}
+                  <div className="carrito-buttons">
+                    <button onClick={() => eliminarDelCarrito(producto.idProducto)}>-</button>
+                    <button onClick={() => aumentarCantidad(producto.idProducto)}>+</button>
+                  </div>
+                </li>
+              ))}
+              <hr/>
+            </ul>
+            <p>Total a pagar: ${calcularTotal()}</p>
+            <button>Pagar</button>
+          </div>
+        )}
+      </div>
       </div>
       <ul className="product-list">
         {productos.map(producto => (
@@ -113,23 +149,6 @@ function MyComponent() {
           </li>
         ))}
       </ul>
-      <div className="carrito">
-        <button className="carrito-boton" onClick={() => setMostrarCarrito(!mostrarCarrito)}>Carrito de compras</button>
-        {mostrarCarrito && (
-          <div className="carrito-desplegado">
-            <ul>
-              {carrito.map((producto) => (
-                <li key={producto.idProducto}>
-                  {producto.nombreProducto} - ${producto.precioProducto} x {producto.cantidad}
-                  <button onClick={() => eliminarDelCarrito(producto.idProducto)}>Eliminar</button>
-                </li>
-              ))}
-            </ul>
-            <p>Total a pagar: ${calcularTotal()}</p>
-            <button>Pagar</button>
-          </div>
-        )}
-      </div>
     </div>
   );
 }

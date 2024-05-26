@@ -3,6 +3,7 @@ import './css/App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Importa 'Routes' en lugar de 'Switch'
 import Catalogo from './js/Catalogo';
 import MyComponent from './js/MyComponent';
+import './js/fontAwesome';
 
 function App() {
   return (
