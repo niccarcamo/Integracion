@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../css/HeaderIndicators.css'; // Importa el archivo CSS para el estilo
+import '../css/HeaderIndicators.css';
 
 const HeaderIndicators = () => {
   const [indicators, setIndicators] = useState({});
@@ -22,14 +22,18 @@ const HeaderIndicators = () => {
 
   return (
     <div className="header-indicators-container">
-      {!error && (
+      {}
+      {Object.keys(indicators).length > 0 ? (
         <div className="header-indicators">
           <p>UF: {indicators.uf.toLocaleString()} CLP</p>
           <p>Dólar: {indicators.dolar.toLocaleString()} CLP</p>
           <p>Euro: {indicators.euro.toLocaleString()} CLP</p>
           <p>UTM: {indicators.utm.toLocaleString()} CLP</p>
         </div>
+      ) : (
+        <div className="header-indicators"><p>Loading...</p></div>
       )}
+      {}
       {error && <div className="header-indicators"><p>{error}</p></div>}
     </div>
   );

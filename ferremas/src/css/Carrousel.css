@@ -1,0 +1,10 @@
+.carousel {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+.carousel .control-dots .dot {
+    background-color: black; 
+    border: 5px solid #F1E932; 
+}
+
+  

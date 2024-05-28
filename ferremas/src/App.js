@@ -1,10 +1,10 @@
 import React from 'react';
 import './css/App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Importa 'Routes' en lugar de 'Switch'
-import Catalogo from './js/Catalogo';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import MyComponent from './js/MyComponent';
 import './js/fontAwesome';
 import HeaderIndicators from './js/HeaderIndicators';
+import CarouselComponent from './js/Carrousel';
 
 function App() {
   return (
@@ -12,19 +12,18 @@ function App() {
       <div className="App">
         <header>
           <h1>Bienvenido a Ferretería Ferremas</h1>
-          <HeaderIndicators /> {/* Agrega el componente HeaderIndicators aquí */}
+          <HeaderIndicators />
           <nav>
             <ul>
               <li><Link to="/">Inicio</Link></li>
-              <li><Link to="/catalogo">Catálogo</Link></li>
-              <li><Link to="/MyComponent">Herramienta</Link></li> {/* Cambiado a /MyComponent */}
+              <li><Link to="/MyComponent">Herramienta</Link></li>
             </ul>
           </nav>
         </header>
         <main>
-          <Routes> {/* Reemplaza Switch por Routes */}
-            <Route path="/catalogo" element={<Catalogo />} />
+          <Routes>
             <Route path="/MyComponent" element={<MyComponent />} />
+            <Route path="/" element={<Homepage />} />
           </Routes>
         </main>
         <footer>
@@ -32,6 +31,14 @@ function App() {
         </footer>
       </div>
     </Router>
+  );
+}
+
+function Homepage() {
+  return (
+    <>
+      <CarouselComponent />
+    </>
   );
 }
 
