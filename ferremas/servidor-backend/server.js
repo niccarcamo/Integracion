@@ -28,7 +28,7 @@ app.use(cors({
 app.use(express.json()); // Middleware para parsear JSON
 
 // Ruta para obtener todos los productos
-app.get('/productos', (req, res) => {
+app.get('/api/productos', (req, res) => {
   db.query('SELECT * FROM Producto', (err, result) => {
     if (err) {
       console.error('Error al obtener productos:', err);
@@ -40,7 +40,7 @@ app.get('/productos', (req, res) => {
 });
 
 // Ruta para buscar productos por nombre
-app.get('/buscar-productos', (req, res) => {
+app.get('/api/buscar-productos', (req, res) => {
   const nombreProducto = req.query.nombre;
   const query = `SELECT * FROM Producto WHERE nombreProducto LIKE ?`;
   const values = [`%${nombreProducto}%`];
@@ -56,7 +56,7 @@ app.get('/buscar-productos', (req, res) => {
 });
 
 // Ruta para insertar un producto
-app.post('/insertarProducto', (req, res) => {
+app.post('/api/insertarProducto', (req, res) => {
   const { nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria } = req.body;
 
   const sql = `INSERT INTO Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) 
