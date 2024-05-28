@@ -1,0 +1,19 @@
+.header-indicators-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+  }
+  
+  .header-indicators {
+    position: absolute;
+    top: -53px; /* Ajusta la posición superior según sea necesario */
+    right: 10px; /* Ajusta la posición derecha según sea necesario */
+    background-color: #3f3d3d98;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+  }
+  

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Catalogo from './js/Catalogo';
 import MyComponent from './js/MyComponent';
 import './js/fontAwesome';
+import HeaderIndicators from './js/HeaderIndicators';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <div className="App">
         <header>
           <h1>Bienvenido a Ferretería Ferremas</h1>
+          <HeaderIndicators /> {/* Agrega el componente HeaderIndicators aquí */}
           <nav>
             <ul>
               <li><Link to="/">Inicio</Link></li>

@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const axios = require('axios');
 
 const app = express();
 
@@ -73,6 +74,24 @@ app.post('/api/insertarProducto', (req, res) => {
     console.log('Producto insertado con id:', results.insertId);
     res.status(200).send('Producto insertado con id: ' + results.insertId);
   });
+});
+
+// Ruta para obtener los indicadores diarios desde mindicador.cl
+app.get('/api/indicators', async (req, res) => {
+  try {
+    const response = await axios.get('https://mindicador.cl/api');
+    const { uf, dolar, utm, euro } = response.data;
+
+    res.json({
+      uf: uf.valor,
+      dolar: dolar.valor,
+      utm: utm.valor,
+      euro: euro.valor,
+    });
+  } catch (error) {
+    console.error('Error fetching indicators:', error);
+    res.status(500).json({ error: 'Error fetching indicators' });
+  }
 });
 
 app.listen(PORT, () => {
