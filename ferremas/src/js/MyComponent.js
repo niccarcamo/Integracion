@@ -10,7 +10,6 @@ function MyComponent() {
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
 
-  // Cargar carrito desde localStorage al iniciar el componente
   useEffect(() => {
     const carritoGuardado = localStorage.getItem('carrito');
     if (carritoGuardado) {
@@ -18,14 +17,13 @@ function MyComponent() {
     }
   }, []);
 
-  // Guardar carrito en localStorage cada vez que cambie
   useEffect(() => {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
 
   useEffect(() => {
     if (nombre.trim() !== '') {
-      buscarProductos(nombre);
+      buscarProductos();
     } else {
       obtenerTodosLosProductos();
     }
@@ -55,8 +53,8 @@ function MyComponent() {
     setCarrito(prevCarrito => {
       const productoExistente = prevCarrito.find(item => item.idProducto === producto.idProducto);
       if (productoExistente) {
-        return prevCarrito.map(item => 
-          item.idProducto === producto.idProducto 
+        return prevCarrito.map(item =>
+          item.idProducto === producto.idProducto
             ? { ...item, cantidad: item.cantidad + 1, total: item.total + producto.precioProducto }
             : item
         );
@@ -82,7 +80,7 @@ function MyComponent() {
   };
 
   const aumentarCantidad = (idProducto) => {
-    setCarrito(prevCarrito => 
+    setCarrito(prevCarrito =>
       prevCarrito.map(item =>
         item.idProducto === idProducto
           ? { ...item, cantidad: item.cantidad + 1, total: item.total + item.precioProducto }
@@ -95,22 +93,59 @@ function MyComponent() {
     return carrito.reduce((total, producto) => total + producto.total, 0);
   };
 
+  const handlePagar = async () => {
+    if (carrito.length === 0) {
+      alert('El carrito está vacío');
+      return;
+    }
+
+    const buyOrder = `O-${Date.now()}`;
+    const sessionId = `S-${Date.now()}`;
+    const amount = calcularTotal();
+    const returnUrl = 'http://localhost:3000/return'; // URL donde se redirigirá después del pago
+
+    try {
+      const response = await axios.post('http://localhost:3001/api/crear-transaccion', {
+        buyOrder,
+        sessionId,
+        amount,
+        returnUrl
+      });
+
+      const { token, url } = response.data;
+      const form = document.createElement('form');
+      form.action = url;
+      form.method = 'POST';
+
+      const tokenInput = document.createElement('input');
+      tokenInput.type = 'hidden';
+      tokenInput.name = 'token_ws';
+      tokenInput.value = token;
+      form.appendChild(tokenInput);
+
+      document.body.appendChild(form);
+      form.submit();
+    } catch (error) {
+      console.error('Error al crear la transacción:', error);
+    }
+  };
+
   return (
     <div>
       <div className="busqueda">
         <img className="Logo" src="/assets/Logoferremas.png" alt="Logo Ferremas" />
         <div className="input-container">
-          <input 
-            type="text" 
-            value={nombre} 
-            onChange={(e) => setNombre(e.target.value)} 
-            placeholder="Ingrese nombre del producto" 
-            className="input_buscar" 
+          <input
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            placeholder="Ingrese nombre del producto"
+            className="input_buscar"
           />
         </div>
         <div className="carrito">
           <button className="carrito-boton" onClick={() => setMostrarCarrito(!mostrarCarrito)}>
-            <FontAwesomeIcon icon={faCartShopping} className="icono_carrito" style={{color: "#323133"}} />
+            <FontAwesomeIcon icon={faCartShopping} className="icono_carrito" style={{ color: "#323133" }} />
           </button>
           {mostrarCarrito && (
             <div className="carrito-desplegado">
@@ -124,10 +159,10 @@ function MyComponent() {
                     </div>
                   </li>
                 ))}
-                <hr/>
+                <hr />
               </ul>
               <p>Total a pagar: ${calcularTotal()}</p>
-              <button>Pagar</button>
+              <button onClick={handlePagar}>Pagar</button>
             </div>
           )}
         </div>

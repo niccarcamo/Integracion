@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const axios = require('axios');
+const { WebpayPlus } = require('transbank-sdk');
 
 const app = express();
 
@@ -91,6 +92,25 @@ app.get('/api/indicators', async (req, res) => {
   } catch (error) {
     console.error('Error fetching indicators:', error);
     res.status(500).json({ error: 'Error fetching indicators' });
+  }
+});
+
+// Nueva ruta para crear la transacción con Webpay Plus
+app.post('/api/crear-transaccion', async (req, res) => {
+  const { buyOrder, sessionId, amount, returnUrl } = req.body;
+
+  try {
+    const response = await (new WebpayPlus.Transaction()).create(
+      buyOrder,
+      sessionId,
+      amount,
+      returnUrl
+    );
+
+    res.json(response);
+  } catch (error) {
+    console.error('Error al crear la transacción:', error);
+    res.status(500).json({ error: 'Error al crear la transacción' });
   }
 });
 
