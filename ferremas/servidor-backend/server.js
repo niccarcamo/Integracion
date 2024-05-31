@@ -95,7 +95,7 @@ app.get('/api/indicators', async (req, res) => {
   }
 });
 
-// Nueva ruta para crear la transacción con Webpay Plus
+
 app.post('/api/crear-transaccion', async (req, res) => {
   const { buyOrder, sessionId, amount, returnUrl } = req.body;
 
