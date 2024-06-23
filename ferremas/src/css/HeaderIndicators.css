@@ -7,8 +7,8 @@
   
   .header-indicators {
     position: absolute;
-    top: -53px; /* Ajusta la posición superior según sea necesario */
-    right: 10px; /* Ajusta la posición derecha según sea necesario */
+    top: -53px;
+    right: 10px; 
     background-color: #3f3d3d98;
     border: 1px solid #ddd;
     padding: 10px;

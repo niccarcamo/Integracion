@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import '../css/MyComponent.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,33 +21,35 @@ function MyComponent() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
 
-  useEffect(() => {
-    if (nombre.trim() !== '') {
-      buscarProductos();
-    } else {
-      obtenerTodosLosProductos();
-    }
-  }, [nombre]);
-
-  const obtenerTodosLosProductos = () => {
-    axios.get('http://localhost:3001/api/productos')
+  const obtenerTodosLosProductos = useCallback(() => {
+    const token = localStorage.getItem('token');
+    axios.get('http://localhost:3001/api/productos', { headers: { Authorization: token } })
       .then(response => {
         setProductos(response.data);
       })
       .catch(error => {
         console.error('Error al obtener los productos:', error);
       });
-  };
+  }, []);
 
-  const buscarProductos = () => {
-    axios.get(`http://localhost:3001/api/buscar-productos?nombre=${nombre}`)
+  const buscarProductos = useCallback(() => {
+    const token = localStorage.getItem('token');
+    axios.get(`http://localhost:3001/api/buscar-productos?nombre=${nombre}`, { headers: { Authorization: token } })
       .then(response => {
         setProductos(response.data);
       })
       .catch(error => {
         console.error('Error al buscar productos:', error);
       });
-  };
+  }, [nombre]);
+
+  useEffect(() => {
+    if (nombre.trim() !== '') {
+      buscarProductos();
+    } else {
+      obtenerTodosLosProductos();
+    }
+  }, [nombre, buscarProductos, obtenerTodosLosProductos]);
 
   const añadirAlCarrito = (producto) => {
     setCarrito(prevCarrito => {
@@ -99,34 +101,22 @@ function MyComponent() {
       return;
     }
 
-    const buyOrder = `O-${Date.now()}`;
-    const sessionId = `S-${Date.now()}`;
-    const amount = calcularTotal();
-    const returnUrl = 'http://localhost:3000/return'; // URL donde se redirigirá después del pago
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId'); // Guarda el ID del usuario cuando inicia sesión
+    const total = calcularTotal();
 
     try {
-      const response = await axios.post('http://localhost:3001/api/crear-transaccion', {
-        buyOrder,
-        sessionId,
-        amount,
-        returnUrl
-      });
+      await axios.post('http://localhost:3001/api/guardar-compra', {
+        carrito,
+        userId,
+        total
+      }, { headers: { Authorization: token } });
 
-      const { token, url } = response.data;
-      const form = document.createElement('form');
-      form.action = url;
-      form.method = 'POST';
-
-      const tokenInput = document.createElement('input');
-      tokenInput.type = 'hidden';
-      tokenInput.name = 'token_ws';
-      tokenInput.value = token;
-      form.appendChild(tokenInput);
-
-      document.body.appendChild(form);
-      form.submit();
+      alert('Compra guardada exitosamente');
+      // Aquí podrías redirigir al usuario a una página de confirmación o vaciar el carrito
+      setCarrito([]);
     } catch (error) {
-      console.error('Error al crear la transacción:', error);
+      console.error('Error al guardar la compra:', error);
     }
   };
 

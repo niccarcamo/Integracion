@@ -1,34 +1,56 @@
 import React from 'react';
 import './css/App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import MyComponent from './js/MyComponent';
 import './js/fontAwesome';
 import HeaderIndicators from './js/HeaderIndicators';
 import CarouselComponent from './js/Carrousel';
+import Register from './js/Register';
+import Login from './js/Login';
+import PrivateRoute from './PrivateRoute';
+import AdminComponent from './js/AdminComponent'; 
+import UserComponent from './js/UserComponent'; 
+import LogoutButton from './js/LogoutButton'; 
 
 function App() {
+  const token = localStorage.getItem('token');
+
   return (
     <Router>
       <div className="App">
-        <header>
-          <h1>Bienvenido a Ferretería Ferremas</h1>
-          <HeaderIndicators />
-          <nav>
-            <ul>
-              <li><Link to="/">Inicio</Link></li>
-              <li><Link to="/MyComponent">Herramienta</Link></li>
-            </ul>
-          </nav>
-        </header>
-        <main>
+        {token ? (
+          <>
+            <header>
+              <h1>Bienvenido a Ferretería Ferremas</h1>
+              <HeaderIndicators />
+              <nav>
+                <ul>
+                  <li><Link to="/">Inicio</Link></li>
+                  <li><Link to="/MyComponent">Herramienta</Link></li>
+                  <li><LogoutButton /></li> {/* Botón de cierre de sesión */}
+                </ul>
+              </nav>
+            </header>
+            <main>
+              <Routes>
+                <Route path="/MyComponent" element={<MyComponent />} />
+                <Route path="/" element={<Homepage />} />
+                <Route path="/admin" element={<PrivateRoute roles={[2]} component={AdminComponent} />} />
+                <Route path="/usuario" element={<PrivateRoute roles={[1, 2]} component={UserComponent} />} />
+                <Route path="*" element={<Navigate to="/" />} /> 
+              </Routes>
+            </main>
+            <footer>
+              <p>&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
+            </footer>
+          </>
+        ) : (
           <Routes>
-            <Route path="/MyComponent" element={<MyComponent />} />
-            <Route path="/" element={<Homepage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/register" />} />
           </Routes>
-        </main>
-        <footer>
-          <p>&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
-        </footer>
+        )}
       </div>
     </Router>
   );
