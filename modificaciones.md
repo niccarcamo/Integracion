@@ -254,9 +254,6 @@ INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, sto
 INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Madera', 'Madera de pino', 5000, 200, "http://imgfz.com/i/zGanqJ5.jpeg", 2);
 INSERT INTO Ferremas.Producto (nombreProducto, descProducto, precioProducto, stockProducto, imagenProducto, Categoria_idCategoria) VALUES ('Sierra Circular', 'Cierra Circular Makita', 150000, 20, "http://imgfz.com/i/lX9hiCg.jpeg", 3);
 
-SELECT * FROM ferremas.productousuario;
-
-
 
 INSERT INTO Ferremas.Rol (idRol, nombreRol, descRol) VALUES (1, 'usuario', 'Usuario general');
 INSERT INTO Ferremas.Rol (idRol, nombreRol, descRol) VALUES (2, 'administrador', 'Administrador del sistema');
