@@ -196,6 +196,28 @@ app.post('/api/crear-transaccion', async (req, res) => {
   }
 });
 
+//VERIFICACIÓN
+// Ruta para verificar si un correo existe en la tabla de usuarios
+app.get('/api/verificar-correo', (req, res) => {
+  const emailUsuario = req.query.email;
+
+  const sql = 'SELECT * FROM Usuario WHERE emailUsuario = ?';
+  db.query(sql, [emailUsuario], (err, results) => {
+    if (err) {
+      console.error('Error al verificar correo:', err);
+      res.status(500).send('Error al verificar correo');
+      return;
+    }
+    
+    if (results.length > 0) {
+      res.status(200).json(results[0]); // Devuelve el primer resultado encontrado
+    } else {
+      res.status(404).send('Correo no encontrado');
+    }
+  });
+});
+
+
 // Ruta para guardar los detalles de una compra
 app.post('/api/guardar-compra', authorize([1]), (req, res) => {
   const { carrito, userId, total } = req.body;

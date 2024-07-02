@@ -1,65 +1,101 @@
-
-.auth-container {
+.registro_fondo {
+  background-image: url("../../public/assets/FondoRegistro.png");
+  background-size: cover;
+  background-position: center;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100vh;
-  background-color: #f7f7f7;
 }
 
-.auth-form {
+.registro {
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
   width: 100%;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} 
+.auth-container  h1{
+ margin-bottom: 1.6em;
+ color: #323133;
 }
-
+.auth-form {
+  width: 100%; 
+}
 .auth-form input {
-  width: 100%;
-  padding: 0.75rem;
+  width: 91%;
+  padding: 0.6rem 1rem; 
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 2px solid #f3e630;
+  border-radius: 14px;
   font-size: 1rem;
+  background-color: #f2f2f2;
+  transition: 1.4s ease;
 }
-
-.auth-form button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
+.auth-form input:hover {
+  background-color: rgb(152, 164, 175);
   color: white;
+  border: 2px solid rgb(235, 223, 44);
+}
+.auth-form input:focus {
+  border-color: #f9f179;
+  background-color: rgb(99, 117, 133);
+  color: white;
+  box-shadow: 0 0 8px rgba(99, 117, 133, 0.8);
+  outline: none;
+}
+.auth-form input:hover::placeholder{
+  color: rgb(216, 216, 216);
+}
+.auth-form input:focus::placeholder{
+  color: rgb(238, 231, 231);
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container button {
+  width: 7em;
+  margin-top: .6em;
+  padding: 0.75rem;
+  background-color: #F1E932;
+  border: none;
+  border-radius: 1em;
+  color: #323133;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 1.4s ease;
+  margin: 1em;
 }
-
-.auth-form button:hover {
-  background-color: #0056b3;
+.container button:hover {
+  background-color: #323133;
+  color: white;
 }
-
 .auth-form .login-link {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.9rem;
 }
-
-.auth-form .login-link button {
+.login-link button {
   background-color: transparent;
   color: #007bff;
   border: none;
   cursor: pointer;
   text-decoration: underline;
+  transition: 1s ease;
 }
-
-.auth-form .login-link button:hover {
-  color: #0056b3;
+.login-link button:hover {
+  color: #bf00ff;
 }
-
+.error-message{
+  color: red;
+}
 nav ul {
   list-style: none;
   display: flex;
@@ -82,3 +118,24 @@ nav ul li button {
 nav ul li button:hover {
   color: #0056b3;
 }
+.login_fondo {
+  background-image: url("../../public/assets/FondoLogin.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.login {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} 

@@ -2,7 +2,6 @@ import React from 'react';
 import './css/App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import MyComponent from './js/MyComponent';
-import './js/fontAwesome';
 import HeaderIndicators from './js/HeaderIndicators';
 import CarouselComponent from './js/Carrousel';
 import Register from './js/Register';
@@ -14,6 +13,7 @@ import LogoutButton from './js/LogoutButton';
 
 function App() {
   const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
 
   return (
     <Router>
@@ -27,6 +27,7 @@ function App() {
                 <ul>
                   <li><Link to="/">Inicio</Link></li>
                   <li><Link to="/MyComponent">Herramienta</Link></li>
+                  <li style={{ margin:'0 1em 0 56em'}}>Bienvenido {role === '2' ? 'Administrador' : 'Usuario'}</li>
                   <li><LogoutButton /></li> {/* Botón de cierre de sesión */}
                 </ul>
               </nav>
@@ -35,8 +36,8 @@ function App() {
               <Routes>
                 <Route path="/MyComponent" element={<MyComponent />} />
                 <Route path="/" element={<Homepage />} />
-                <Route path="/admin" element={<PrivateRoute roles={[2]} component={AdminComponent} />} />
-                <Route path="/usuario" element={<PrivateRoute roles={[1, 2]} component={UserComponent} />} />
+                <Route path="/admin" element={<PrivateRoute role={['2']} component={AdminComponent} />} />
+                <Route path="/usuario" element={<PrivateRoute role={['1', '2']} component={UserComponent} />} />
                 <Route path="*" element={<Navigate to="/" />} /> 
               </Routes>
             </main>

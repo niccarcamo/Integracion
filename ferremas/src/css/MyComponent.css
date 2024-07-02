@@ -1,7 +1,6 @@
 :root{
  --color1 : #F1E932;
  --color2 : #323133;
-
 }
 
 .busqueda{
@@ -61,17 +60,17 @@
 }
 .carrito-boton {
   top: 20px; 
-  padding: 10px 14px;
+  padding: 15px;
   background-color: var(--color1);
   border: none;
   cursor: pointer;
   transition: .6s ease;
-  border-radius: 14px;
+  border-radius: 100em;
 }
 
 .carrito-boton:hover {
   background-color: var(--color2);
-  border-radius: 14px;
+  border-radius: 100em;
   box-shadow: 0 0 0 3px #686769;
   
 }
@@ -162,7 +161,7 @@ button.carrito-boton:hover .icono_carrito {
   object-fit: cover;
   padding-bottom: 10px; 
 }
-.agregar_carrito{
+.boton_producto{
   background-color: var(--color1);
   color: var(--color2);
   border: 2px solid var(--color2);
@@ -171,7 +170,7 @@ button.carrito-boton:hover .icono_carrito {
   cursor: pointer;
   transition: 0.6s ease;
 }
-.agregar_carrito:hover{
+.boton_producto:hover{
   background-color: var(--color2);
   color: var(--color1);
   border: 2px solid var(--color1);  
