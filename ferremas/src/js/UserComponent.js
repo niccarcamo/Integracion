@@ -1,30 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const UserComponent = () => {
   const [compras, setCompras] = useState([]);
+  const [carrito, setCarrito] = useState([]);
 
   useEffect(() => {
-    const fetchCompras = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const response = await axios.get('http://localhost:3001/api/compras', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setCompras(response.data);
-      } catch (error) {
-        console.error('Error al obtener las compras:', error);
-      }
+    const storedCompras = JSON.parse(localStorage.getItem('compras')) || [];
+    setCompras(storedCompras);
+  }, []);
+
+  const generateId = () => {
+    return '_' + Math.random().toString(36).substr(2, 9); // Genera un ID único de 9 caracteres
+  };
+
+  const handleGuardarCompra = () => {
+    if (carrito.length === 0) {
+      alert('El carrito está vacío');
+      return;
+    }
+
+    const compraActual = {
+      id: generateId(),
+      total: calcularTotal(),
+      fecha: new Date().toISOString(),
+      productos: [...carrito]
     };
 
-    fetchCompras();
-  }, []);
+    const updatedCompras = [...compras, compraActual];
+    setCompras(updatedCompras);
+    localStorage.setItem('compras', JSON.stringify(updatedCompras));
+    setCarrito([]);
+  };
+
+  const calcularTotal = () => {
+    return carrito.reduce((total, producto) => total + producto.total, 0);
+  };
 
   return (
     <div>
       <h1>Mis Compras</h1>
+      <button onClick={handleGuardarCompra}>Guardar Compra Localmente</button>
       <ul>
         {compras.map(compra => (
           <li key={compra.id}>

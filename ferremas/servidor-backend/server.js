@@ -44,7 +44,7 @@ const authorize = (roles = []) => {
       return res.status(401).send('Acceso denegado');
     }
 
-    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    jwt.verify(token.split(' ')[1], SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).send('Token no válido');
       }
@@ -196,7 +196,7 @@ app.post('/api/crear-transaccion', async (req, res) => {
   }
 });
 
-//VERIFICACIÓN
+
 // Ruta para verificar si un correo existe en la tabla de usuarios
 app.get('/api/verificar-correo', (req, res) => {
   const emailUsuario = req.query.email;
@@ -217,35 +217,7 @@ app.get('/api/verificar-correo', (req, res) => {
   });
 });
 
-
-// Ruta para guardar los detalles de una compra
-app.post('/api/guardar-compra', authorize([1]), (req, res) => {
-  const { carrito, userId, total } = req.body;
-
-  const sqlPedido = 'INSERT INTO Pedido (precioPedido, estadoPedido, Usuario_idUsuario) VALUES (?, "Pendiente", ?)';
-  db.query(sqlPedido, [total, userId], (err, results) => {
-    if (err) {
-      console.error('Error al guardar el pedido:', err);
-      res.status(500).send('Error al guardar el pedido');
-      return;
-    }
-
-    const pedidoId = results.insertId;
-
-    const sqlDetalles = 'INSERT INTO Productos_Carrito (cantidadProductos_Carrito, Producto_idProducto, Carrito_idCarrito) VALUES ?';
-    const detalles = carrito.map(item => [item.cantidad, item.idProducto, pedidoId]);
-
-    db.query(sqlDetalles, [detalles], (err) => {
-      if (err) {
-        console.error('Error al guardar los detalles del pedido:', err);
-        res.status(500).send('Error al guardar los detalles del pedido');
-        return;
-      }
-      res.status(200).send('Compra guardada exitosamente');
-    });
-  });
-});
-
+// Iniciar el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor backend corriendo en el puerto ${PORT}`);
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });

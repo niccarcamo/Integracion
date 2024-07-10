@@ -1,49 +1,20 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/MyComponent.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faPenToSquare} from '@fortawesome/free-solid-svg-icons';
-
-const role = localStorage.getItem('role');
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 function MyComponent() {
   const [nombre, setNombre] = useState('');
   const [productos, setProductos] = useState([]);
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
+  const [token, setToken] = useState('');
 
   useEffect(() => {
-    const carritoGuardado = localStorage.getItem('carrito');
-    if (carritoGuardado) {
-      setCarrito(JSON.parse(carritoGuardado));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-  }, [carrito]);
-
-  const obtenerTodosLosProductos = useCallback(() => {
     const token = localStorage.getItem('token');
-    axios.get('http://localhost:3001/api/productos', { headers: { Authorization: token } })
-      .then(response => {
-        setProductos(response.data);
-      })
-      .catch(error => {
-        console.error('Error al obtener los productos:', error);
-      });
+    setToken(token);
   }, []);
-
-  const buscarProductos = useCallback(() => {
-    const token = localStorage.getItem('token');
-    axios.get(`http://localhost:3001/api/buscar-productos?nombre=${nombre}`, { headers: { Authorization: token } })
-      .then(response => {
-        setProductos(response.data);
-      })
-      .catch(error => {
-        console.error('Error al buscar productos:', error);
-      });
-  }, [nombre]);
 
   useEffect(() => {
     if (nombre.trim() !== '') {
@@ -51,7 +22,52 @@ function MyComponent() {
     } else {
       obtenerTodosLosProductos();
     }
-  }, [nombre, buscarProductos, obtenerTodosLosProductos]);
+  }, [nombre, token]); // Agregar token a las dependencias
+
+  const obtenerTodosLosProductos = () => {
+    axios.get('http://localhost:3001/api/productos', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        setProductos(response.data);
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
+          // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
+        } else {
+          console.error('Error al obtener los productos:', error);
+        }
+      });
+  };
+
+  const buscarProductos = () => {
+    axios.get(`http://localhost:3001/api/buscar-productos?nombre=${nombre}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        setProductos(response.data);
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
+          // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
+        } else {
+          console.error('Error al buscar productos:', error);
+        }
+      });
+  };
+
+
+
+
+
+
+
 
   const añadirAlCarrito = (producto) => {
     setCarrito(prevCarrito => {
@@ -103,22 +119,38 @@ function MyComponent() {
       return;
     }
 
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId'); // Guarda el ID del usuario cuando inicia sesión
-    const total = calcularTotal();
+    const buyOrder = `O-${Date.now()}`;
+    const sessionId = `S-${Date.now()}`;
+    const amount = calcularTotal();
+    const returnUrl = 'http://localhost:3000/return';
 
     try {
-      await axios.post('http://localhost:3001/api/guardar-compra', {
-        carrito,
-        userId,
-        total
-      }, { headers: { Authorization: token } });
+      const response = await axios.post('http://localhost:3001/api/crear-transaccion', {
+        buyOrder,
+        sessionId,
+        amount,
+        returnUrl
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-      alert('Compra guardada exitosamente');
-      // Aquí podrías redirigir al usuario a una página de confirmación o vaciar el carrito
-      setCarrito([]);
+      const { token: transactionToken, url } = response.data;
+      const form = document.createElement('form');
+      form.action = url;
+      form.method = 'POST';
+
+      const tokenInput = document.createElement('input');
+      tokenInput.type = 'hidden';
+      tokenInput.name = 'token_ws';
+      tokenInput.value = transactionToken;
+      form.appendChild(tokenInput);
+
+      document.body.appendChild(form);
+      form.submit();
     } catch (error) {
-      console.error('Error al guardar la compra:', error);
+      console.error('Error al crear la transacción:', error);
     }
   };
 
@@ -139,6 +171,7 @@ function MyComponent() {
           <button className="carrito-boton" onClick={() => setMostrarCarrito(!mostrarCarrito)}>
             <FontAwesomeIcon icon={faCartShopping} className="icono_carrito" style={{ color: "#323133" }} />
           </button>
+
           {mostrarCarrito && (
             <div className="carrito-desplegado">
               <ul>
@@ -153,12 +186,14 @@ function MyComponent() {
                 ))}
                 <hr />
               </ul>
+
               <p>Total a pagar: ${calcularTotal()}</p>
-              <button onClick={handlePagar}>Pagar</button>
+              <button onClick={handlePagar}>Pagar con Webpay</button>
             </div>
           )}
         </div>
       </div>
+
       <ul className="product-list">
         {productos.map(producto => (
           <li key={producto.idProducto}>
@@ -172,12 +207,8 @@ function MyComponent() {
                 {producto.imagenProducto && (
                   <img src={producto.imagenProducto} alt={producto.nombreProducto} className="product-image" />
                 )}
+
                 <button className="boton_producto" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
-                {role === '2' && (
-                  <button class="boton_producto"  style={{ marginLeft: '1em', padding: '.4em .8em' }}>
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </button>
-                )}
               </div>
             </div>
           </li>
