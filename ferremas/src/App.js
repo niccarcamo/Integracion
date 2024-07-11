@@ -1,4 +1,5 @@
 import React from 'react';
+import './css/App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import Navbar from './js/Navbar';
 import CrearProducto from './js/CrearProducto';
@@ -27,15 +28,13 @@ function App() {
         {token ? (
           <>
             <header>
-              <h1>Bienvenido a Ferretería Ferremas</h1>
+            <div className="logo-container">
+                <img className="Logo" id='Logo' src="/assets/Logoferremas.png" alt="Logo Ferremas" />
+              </div>
               <HeaderIndicators />
-              <nav>
+              <nav class="nav-style">
                 <ul>
-                  <li><Link to="/">Inicio</Link></li>
-                  <li><Link to="/MyComponent">Herramienta</Link></li>
                   {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
-                  <li style={{ margin: '0 1em 0 56em' }}>Bienvenido {role === '2' ? 'Administrador' : role === '3' ? 'Vendedor' : 'Usuario'}</li>
-                  <li><LogoutButton /></li>
                 </ul>
               </nav>
             </header>
@@ -53,7 +52,7 @@ function App() {
               </Routes>
             </main>
             <footer>
-              <p>&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
+              <p class="footer-letter">&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
             </footer>
           </>
         ) : (
