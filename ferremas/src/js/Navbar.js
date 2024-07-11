@@ -6,12 +6,16 @@ const role = localStorage.getItem('role');
 
 const Navbar = ({ isAdmin }) => {
   return (
-    <nav style={styles.navbar} >
+    <nav style={styles.navbar}>
       <ul style={styles.navbarUl}>
         <li style={styles.navbarLi}><Link to="/">Inicio</Link></li>
         <li style={styles.navbarLi}><Link to="/MyComponent">Herramienta</Link></li>
         {isAdmin && <li style={styles.navbarLi}><Link to="/crear-producto">Crear Producto</Link></li>}
         {isAdmin && <li style={styles.navbarLi}><Link to="/mostrar-usuarios">Mostrar Usuarios</Link></li>}
+
+        
+        {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
+
         <li style={{ ...styles.navbarLi, marginLeft: 'auto' }}>
           <LogoutButton style={styles.logoutLink} />
         </li>
