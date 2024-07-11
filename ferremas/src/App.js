@@ -1,12 +1,11 @@
 import React from 'react';
-import './css/App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import Navbar from './js/Navbar';
 import CrearProducto from './js/CrearProducto';
-import MostrarUsuarios from './js/MostrarUsuarios';  
+import MostrarUsuarios from './js/MostrarUsuarios';
 import MyComponent from './js/MyComponent';
 import HeaderIndicators from './js/HeaderIndicators';
-import CarouselComponent from './js/Carrousel';
+import Carrousel from './js/Carrousel'; // Asegúrate de que la ruta del componente Carousel sea correcta
 import Register from './js/Register';
 import Login from './js/Login';
 import PrivateRoute from './PrivateRoute';
@@ -14,15 +13,18 @@ import AdminComponent from './js/AdminComponent';
 import UserComponent from './js/UserComponent';
 import Vendedor from './js/Vendedor';
 import LogoutButton from './js/LogoutButton';
+import '../src/css/App.css';
 
 function App() {
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
 
+  const showNavbar = !(window.location.pathname === '/register' || window.location.pathname === '/login');
+
   return (
     <Router>
       <div className="App">
-        <Navbar isAdmin={role === '2'} />
+        {showNavbar && <Navbar isAdmin={role === '2'} />} {/* Mostrar Navbar solo si no está en /register o /login */}
         {token ? (
           <>
             <header>
@@ -30,8 +32,7 @@ function App() {
               <HeaderIndicators />
               <nav>
                 <ul>
-     
-                  {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}            
+                  {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
                 </ul>
               </nav>
             </header>
@@ -42,9 +43,9 @@ function App() {
                 <Route path="/admin" element={<PrivateRoute role={['2']} component={AdminComponent} />} />
                 <Route path="/usuario" element={<PrivateRoute role={['1', '2']} component={UserComponent} />} />
                 <Route path="/vendedor" element={<PrivateRoute role={['3']} component={Vendedor} />} />
-                <Route path="/crear-producto" element={<PrivateRoute role={['2']} component={CrearProducto} />} />
-                <Route path="/mostrar-usuarios" element={<PrivateRoute role={['2']} component={MostrarUsuarios} />} />
-                <Route path="/LogoutButton" element={<LogoutButton />} />
+                <Route path="/crear-producto" element={<PrivateRoute role={['2']} component={<CrearProducto />} />} />
+                <Route path="/mostrar-usuarios" element={<PrivateRoute role={['2']} component={<MostrarUsuarios />} />} />
+                <Route path="/logout" element={<LogoutButton />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </main>
@@ -67,7 +68,7 @@ function App() {
 function Homepage() {
   return (
     <>
-      <CarouselComponent />
+      <Carrousel />
     </>
   );
 }
