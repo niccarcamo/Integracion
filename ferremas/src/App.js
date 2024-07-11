@@ -1,18 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './js/Navbar';
 import CrearProducto from './js/CrearProducto';
 import MostrarUsuarios from './js/MostrarUsuarios';
 import LogoutButton from './js/LogoutButton';
 import MyComponent from './js/MyComponent';
 import HeaderIndicators from './js/HeaderIndicators';
-import CarouselComponent from './js/Carrousel'; // Asegúrate de que la ruta del componente Carousel sea correcta
+import CarouselComponent from './js/Carrousel';
 import Register from './js/Register';
 import Login from './js/Login';
 import PrivateRoute from './PrivateRoute';
 import AdminComponent from './js/AdminComponent';
 import UserComponent from './js/UserComponent';
 import Vendedor from './js/Vendedor';
+import '../src/css/App.css'
+
 
 function App() {
   const token = localStorage.getItem('token');
@@ -31,11 +33,6 @@ function App() {
               <HeaderIndicators />
               <nav>
                 <ul>
-                  <li><Link to="/">Inicio</Link></li>
-                  <li><Link to="/MyComponent">Herramienta</Link></li>
-                  {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
-                  <li style={{ margin: '0 1em 0 56em' }}>Bienvenido {role === '2' ? 'Administrador' : role === '3' ? 'Vendedor' : 'Usuario'}</li>
-                  <li><LogoutButton /></li>
                 </ul>
               </nav>
             </header>

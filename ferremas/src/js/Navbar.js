@@ -17,9 +17,10 @@ const Navbar = ({ isAdmin }) => {
         {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
 
         <li style={{ ...styles.navbarLi, marginLeft: 'auto' }}>
-          <LogoutButton style={styles.logoutLink} />
         </li>
         <li style={{ margin: '0 1em 0 56em' }}>Bienvenido {role === '2' ? 'Administrador' : role === '3' ? 'Vendedor' : 'Usuario'}</li>
+        <li><LogoutButton /></li>
+
       </ul>
       
     </nav>
