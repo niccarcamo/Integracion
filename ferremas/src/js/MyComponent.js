@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/MyComponent.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+const role = localStorage.getItem('role');
 
 function MyComponent() {
   const [nombre, setNombre] = useState('');
@@ -207,8 +208,14 @@ function MyComponent() {
                 {producto.imagenProducto && (
                   <img src={producto.imagenProducto} alt={producto.nombreProducto} className="product-image" />
                 )}
-
+              
                 <button className="boton_producto" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
+              
+                {role === '2' && (
+                  <button class="boton_producto"  style={{ marginLeft: '1em', padding: '.4em .8em' }}>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </button>
+                )}
               </div>
             </div>
           </li>
