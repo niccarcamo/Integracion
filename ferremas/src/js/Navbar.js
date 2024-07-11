@@ -6,7 +6,7 @@ const role = localStorage.getItem('role');
 
 const Navbar = ({ isAdmin }) => {
   return (
-    <nav style={styles.navbar}>
+    <nav style={styles.navbar} >
       <ul style={styles.navbarUl}>
         <li style={styles.navbarLi}><Link to="/">Inicio</Link></li>
         <li style={styles.navbarLi}><Link to="/MyComponent">Herramienta</Link></li>

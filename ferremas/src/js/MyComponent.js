@@ -158,7 +158,6 @@ function MyComponent() {
   return (
     <div>
       <div className="busqueda">
-        <img className="Logo" src="/assets/Logoferremas.png" alt="Logo Ferremas" />
         <div className="input-container">
           <input
             type="text"

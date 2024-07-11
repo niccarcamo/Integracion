@@ -1,29 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/Registro.css';
 
 const Register = () => {
-  const [form, setForm] = useState({
+  const [form, setForm] = React.useState({
     nombreUsuario: '',
     contrasenaUsuario: '',
     emailUsuario: '',
     direccionUsuario: '',
     rol: 1,
   });
-  const [message, setMessage] = useState('');
-  const [hovered, setHovered] = useState(false); // Estado para el hover del botón
-
+  const [message, setMessage] = React.useState('');
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    if (!params.get('reloaded')) {
-      params.set('reloaded', 'true');
-      window.location.search = params.toString();
-    }
-  }, [location]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -56,7 +45,6 @@ const Register = () => {
     try {
       await axios.post('http://localhost:3001/api/register', form);
       alert('Usuario registrado');
-      // Limpiar el formulario después del registro exitoso
       setForm({
         nombreUsuario: '',
         contrasenaUsuario: '',
@@ -64,19 +52,15 @@ const Register = () => {
         direccionUsuario: '',
         rol: 1,
       });
-      // Solo navegar a la página de login si el registro fue exitoso y el correo no estaba repetido
       navigate('/login');
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }
   };
 
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
+  const handleGuestLogin = () => {
+    // Redirige directamente a la página principal ("/") al hacer clic en "Iniciar como invitado"
+    navigate('/');
   };
 
   return (
@@ -119,17 +103,18 @@ const Register = () => {
           <div className="container">
             <button type="submit">Registrar</button>
           </div>
+          <div>
+            {/* Utiliza Link en lugar de button para redirigir directamente a la página principal */}
+            <Link to="/" className="boton-invitado" onClick={handleGuestLogin}>
+              Iniciar como invitado
+            </Link>
+          </div>
           <div className="login-link">
-            <button
-              type="button"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => navigate('/login')}
-            >
-              {hovered ? 'Haz click aquí para iniciar sesión' : 'Ya tengo una cuenta'}
+            <button type="button" onClick={() => navigate('/login')}>
+              Ya tengo una cuenta
             </button>
           </div>
-          <div class="container">
+          <div className="container">
             {message && <p className="error-message">{message}</p>}
           </div>
         </form>

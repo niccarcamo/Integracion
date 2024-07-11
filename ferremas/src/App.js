@@ -14,6 +14,9 @@ import AdminComponent from './js/AdminComponent';
 import UserComponent from './js/UserComponent';
 import Vendedor from './js/Vendedor';
 import LogoutButton from './js/LogoutButton';
+import VistaInvitado from './js/VistaInvitado';
+
+// Importa el componente VistaInvitado
 
 function App() {
   const token = localStorage.getItem('token');
@@ -26,12 +29,13 @@ function App() {
         {token ? (
           <>
             <header>
-              <h1>Bienvenido a Ferretería Ferremas</h1>
+              <div className="logo-container">
+                <img className="Logo" id='Logo' src="/assets/Logoferremas.png" alt="Logo Ferremas" />
+              </div>
               <HeaderIndicators />
               <nav>
                 <ul>
-     
-                  {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}            
+                  {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
                 </ul>
               </nav>
             </header>
@@ -45,11 +49,12 @@ function App() {
                 <Route path="/crear-producto" element={<PrivateRoute role={['2']} component={CrearProducto} />} />
                 <Route path="/mostrar-usuarios" element={<PrivateRoute role={['2']} component={MostrarUsuarios} />} />
                 <Route path="/LogoutButton" element={<LogoutButton />} />
+                <Route path="/VistaInvitado" element={<VistaInvitado />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </main>
             <footer>
-              <p>&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
+              <p className="footer-letter">&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
             </footer>
           </>
         ) : (
