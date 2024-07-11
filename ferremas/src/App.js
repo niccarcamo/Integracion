@@ -7,13 +7,14 @@ import MostrarUsuarios from './js/MostrarUsuarios';
 import LogoutButton from './js/LogoutButton';
 import MyComponent from './js/MyComponent';
 import HeaderIndicators from './js/HeaderIndicators';
-import CarouselComponent from './js/Carrousel'; // Asegúrate de que la ruta del componente Carousel sea correcta
+import CarouselComponent from './js/Carrousel';
 import Register from './js/Register';
 import Login from './js/Login';
 import PrivateRoute from './PrivateRoute';
 import AdminComponent from './js/AdminComponent';
 import UserComponent from './js/UserComponent';
 import Vendedor from './js/Vendedor';
+
 
 function App() {
   const token = localStorage.getItem('token');
