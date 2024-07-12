@@ -22,7 +22,6 @@ const HeaderIndicators = () => {
 
   return (
     <div className="header-indicators-container">
-      {}
       {Object.keys(indicators).length > 0 ? (
         <div className="header-indicators">
           <p>UF: {indicators.uf.toLocaleString()} CLP</p>
@@ -31,9 +30,8 @@ const HeaderIndicators = () => {
           <p>UTM: {indicators.utm.toLocaleString()} CLP</p>
         </div>
       ) : (
-        <div className="header-indicators"><p>Loading...</p></div>
+        <div className="header-indicators"><p className="loading">Loading...</p></div>
       )}
-      {}
       {error && <div className="header-indicators"><p>{error}</p></div>}
     </div>
   );

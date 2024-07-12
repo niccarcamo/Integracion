@@ -216,3 +216,43 @@ button.carrito-boton:hover .icono_carrito {
   cursor: pointer;
   transition: 0.6s ease;
 }
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.input_select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  font-size: 14px;
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.input_buscar {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  font-size: 14px;
+}
+
+.input_container select,
+.input_container input {
+  margin-right: 10px;
+}
+
+
+.input_buscar {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  font-size: 14px;
+  text-align: left; /* Alinear el texto a la izquierda */
+}
+  

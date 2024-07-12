@@ -181,14 +181,14 @@ function MyComponent() {
   return (
     <div>
       <div className="busqueda">
-      <div className="input-container">
+        <div className="input-container">
           <select
             value={searchBy}
             onChange={(e) => setSearchBy(e.target.value)}
             className="input_select"
           >
-            <option value="nombre">Nombre</option>
-            <option value="id">ID</option>
+            <option value="nombre">Buscar por nombre</option>
+            <option value="id">Buscar por ID</option>
           </select>
           <input
             type="text"
