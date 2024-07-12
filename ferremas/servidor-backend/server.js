@@ -217,6 +217,61 @@ app.get('/api/verificar-correo', (req, res) => {
   });
 });
 
+// BUSCAR POR ID PRODUCTO
+app.get('/api/productos/:id', authorize([2]), (req, res) => {
+  const idProducto = req.params.id;
+  const query = `SELECT * FROM Producto WHERE idProducto = ?`;
+
+  db.query(query, [idProducto], (err, result) => {
+    if (err) {
+      console.error('Error al buscar producto:', err);
+      res.status(500).send('Error al buscar producto');
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).send('Producto no encontrado');
+      return;
+    }
+    res.status(200).send(result[0]);
+  });
+});
+
+// MODIFICAR PRODUCTO
+// Ruta para modificar un producto
+app.put('/api/productos/modificar/:id', authorize([2]), (req, res) => {
+  const idProducto = req.params.id;
+  const { nombreProducto, descProducto, precioProducto, stockProducto } = req.body;
+
+  const query = `
+    UPDATE Producto
+    SET nombreProducto = ?, descProducto = ?, precioProducto = ?, stockProducto = ?
+    WHERE idProducto = ?
+  `;
+
+  db.query(query, [nombreProducto, descProducto, precioProducto, stockProducto, idProducto], (err, result) => {
+    if (err) {
+      console.error('Error al actualizar producto:', err);
+      return res.status(500).send('Error al actualizar producto');
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).send('Producto no encontrado');
+    }
+    res.status(200).send('Producto actualizado exitosamente');
+  });
+});
+
+// Ruta para obtener todos los usuarios con nombre de usuario, correo y rol
+app.get('/api/usuarios', (req, res) => {
+  const query = 'SELECT idUsuario, nombreUsuario, emailUsuario, Rol_idRol FROM Usuario';
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error('Error al obtener usuarios:', err);
+      return res.status(500).json({ error: 'Error interno al obtener usuarios' });
+    }
+    res.status(200).json(result);
+  });
+});
+
 // Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
