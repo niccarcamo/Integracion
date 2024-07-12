@@ -98,7 +98,7 @@ app.post('/api/login', (req, res) => {
 });
 
 // Ruta para obtener todos los productos
-app.get('/api/productos', authorize([1, 2]), (req, res) => {
+app.get('/api/productos', (req, res) => {
   db.query('SELECT * FROM Producto', (err, result) => {
     if (err) {
       console.error('Error al obtener productos:', err);
