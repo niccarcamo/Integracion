@@ -260,6 +260,30 @@ app.put('/api/productos/modificar/:id', authorize([2]), (req, res) => {
   });
 });
 
+app.put('/api/usuarios/:id', (req, res) => {
+  const idUsuario = req.params.id;
+  const { Rol_idRol } = req.body;
+
+  const query = `
+    UPDATE Usuario
+    SET Rol_idRol = ?
+    WHERE idUsuario = ?
+  `;
+
+  db.query(query, [Rol_idRol, idUsuario], (err, result) => {
+    if (err) {
+      console.error('Error al actualizar rol del usuario:', err);
+      return res.status(500).send('Error al actualizar rol del usuario');
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).send('Usuario no encontrado');
+    }
+    res.status(200).send(`Rol actualizado correctamente para el usuario ${idUsuario}`);
+  });
+});
+
+
+
 // Ruta para obtener todos los usuarios con nombre de usuario, correo y rol
 app.get('/api/usuarios', (req, res) => {
   const query = 'SELECT idUsuario, nombreUsuario, emailUsuario, Rol_idRol FROM Usuario';
