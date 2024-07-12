@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/MyComponent.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+
 const role = localStorage.getItem('role');
 
 function MyComponent() {
@@ -11,6 +13,8 @@ function MyComponent() {
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
   const [token, setToken] = useState('');
+
+  const navigate = useNavigate();  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -35,7 +39,7 @@ function MyComponent() {
         setProductos(response.data);
       })
       .catch(error => {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
           console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
           // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
         } else {
@@ -54,7 +58,7 @@ function MyComponent() {
         setProductos(response.data);
       })
       .catch(error => {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
           console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
           // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
         } else {
@@ -62,13 +66,6 @@ function MyComponent() {
         }
       });
   };
-
-
-
-
-
-
-
 
   const añadirAlCarrito = (producto) => {
     setCarrito(prevCarrito => {
@@ -113,6 +110,10 @@ function MyComponent() {
   const calcularTotal = () => {
     return carrito.reduce((total, producto) => total + producto.total, 0);
   };
+
+  const handleEditClick = (idProducto) => {
+    navigate(`/modificar-producto/${idProducto}`);
+  };  
 
   const handlePagar = async () => {
     if (carrito.length === 0) {
@@ -207,12 +208,16 @@ function MyComponent() {
                 {producto.imagenProducto && (
                   <img src={producto.imagenProducto} alt={producto.nombreProducto} className="product-image" />
                 )}
-              
+                {!role === '2' && (
                 <button className="boton_producto" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
-              
+                )}
                 {role === '2' && (
-                  <button class="boton_producto"  style={{ marginLeft: '1em', padding: '.4em .8em' }}>
-                    <FontAwesomeIcon icon={faPenToSquare} />
+                  <button 
+                      className="editar"  
+                      style={{ marginLeft: '1em', padding: '.4em .8em' }}
+                      onClick={() => handleEditClick(producto.idProducto)}
+                    >
+                      <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
                 )}
               </div>

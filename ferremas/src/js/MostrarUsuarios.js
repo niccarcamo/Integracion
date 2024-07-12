@@ -17,11 +17,6 @@ const MostrarUsuarios = () => {
     }
   };
 
-  const handleEditarUsuario = (idUsuario) => {
-    // Lógica para editar el usuario
-    console.log(`Editar usuario con id ${idUsuario}`);
-  };
-
   return (
     <div>
       <h2>Mostrar Usuarios</h2>
@@ -31,7 +26,6 @@ const MostrarUsuarios = () => {
             <th>Nombre de Usuario</th>
             <th>Email</th>
             <th>Rol</th>
-            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -40,9 +34,7 @@ const MostrarUsuarios = () => {
               <td>{usuario.nombreUsuario}</td>
               <td>{usuario.emailUsuario}</td>
               <td>{usuario.rol}</td>
-              <td>
-                <button onClick={() => handleEditarUsuario(usuario.id)}>Editar</button>
-              </td>
+              <td>{usuario.Rol_idRol}</td>
             </tr>
           ))}
         </tbody>
