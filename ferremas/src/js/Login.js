@@ -24,6 +24,7 @@ const Login = () => {
       localStorage.setItem('role', response.data.role);
       navigate('/');
       alert('Inicio de sesión exitoso');
+      window.location.reload(); // Recargar la página después de navegar a '/'
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       setError('Contraseña o Email incorrecto.');
@@ -56,7 +57,7 @@ const Login = () => {
             </Link>
           </div>
         </form>
-        <div class="container">
+        <div className="container">
           {error && <p className="error-message">{error}</p>}
         </div>
       </div>
