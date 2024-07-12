@@ -53,8 +53,8 @@ const MostrarUsuarios = () => {
       padding: '8px',
     },
     btnActualizar: {
-      backgroundColor: '#4CAF50',
-      color: 'white',
+      backgroundColor: '#F1E932',
+      color: 'black',
       padding: '8px 12px',
       border: 'none',
       cursor: 'pointer',

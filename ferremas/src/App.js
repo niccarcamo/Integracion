@@ -28,7 +28,9 @@ function App() {
         {token ? (
           <>
             <header>
-              <h1>Bienvenido a Ferretería Ferremas</h1>
+            
+              <h1 style={{ color: 'black' }}>Bienvenido a Ferretería Ferremas</h1>
+
               <HeaderIndicators />
             </header>
             <main>

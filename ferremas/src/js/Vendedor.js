@@ -93,9 +93,7 @@ const Vendedor = () => {
       </div>
 
       <div className="actions-container">
-        <button onClick={handlePayment}>Pagar</button>
         <button onClick={handleInvoice}>Imprimir/Descargar Boleta</button>
-        <button onClick={handleSendInvoice}>Enviar Boleta por Correo</button>
       </div>
     </div>
   );
