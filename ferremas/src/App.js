@@ -41,7 +41,7 @@ function App() {
                 <Route path="/vendedor" element={<Vendedor />} />
                 <Route path="/crear-producto" element={<CrearProducto />} />
                 <Route path="/modificar-producto/:id" element={<ModificarProducto />} />
-                <Route path="/usuarios" element={<MostrarUsuarios />} />
+                <Route path="/mostrar-usuarios" element={<MostrarUsuarios />} />
                 <Route path="/logout" element={<LogoutButton />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
