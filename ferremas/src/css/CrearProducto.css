@@ -1,0 +1,70 @@
+:root {
+  --color1: #F1E932;
+  --color2: #323133;
+}
+
+.crear-producto {
+  padding: 6rem;
+}
+
+.crear-producto h1 {
+  color: var(--color2);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.crear-producto form {
+  max-width: 40rem;
+  margin: 0 auto;
+  background-color: var(--color1);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+}
+
+.crear-producto input {
+  width: calc(100% - 1.5rem);
+  padding: .8rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: .1rem solid var(--color2);
+  border-radius: 1rem;
+  box-shadow: .2rem .2rem 1rem #aaa;
+  transition: .8s;
+}
+
+.crear-producto input:focus {
+  outline: none;
+  border-color: var(--color1);
+  box-shadow: 0 0 1rem #5c5c5c;
+}
+
+.crear-producto input::placeholder {
+  color: #5b5a5c;
+}
+
+.crear-producto button {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: .6rem;
+  background-color: var(--color1);
+  color: var(--color2);
+  border: .1rem solid var(--color2);
+  border-radius: 1rem;
+  padding: .8rem 1rem;
+  cursor: pointer;
+  transition: .6s ease;
+}
+
+.crear-producto button:hover {
+  background-color: var(--color2);
+  color: var(--color1);
+  border-color: var(--color1);
+  box-shadow: 0 0 0 3px var(--color2);
+}
+
+.crear-producto .error-message {
+  color: red;
+  margin-top: 10px;
+}

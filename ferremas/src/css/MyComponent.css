@@ -170,11 +170,19 @@ button.carrito-boton:hover .icono_carrito {
   cursor: pointer;
   transition: 0.6s ease;
 }
-.boton_producto:hover{
+.boton_producto:hover, .editar:hover{
   background-color: var(--color2);
   color: var(--color1);
   border: 2px solid var(--color1);  
   transform: scale(1.06);
   box-shadow: 0 0 0 3px var(--color2);
   font-weight: bold;
+}
+.editar{
+  background-color: var(--color1);
+  color: var(--color2);
+  border: 2px solid var(--color2);
+  border-radius: 4rem;
+  cursor: pointer;
+  transition: 0.6s ease;
 }
