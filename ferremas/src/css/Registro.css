@@ -60,7 +60,8 @@
   justify-content: center;
   align-items: center;
 }
-.container button {
+.container button, .boton-invitado {
+  text-decoration: none;
   width: 7em;
   margin-top: .6em;
   padding: 0.75rem;
@@ -73,9 +74,12 @@
   transition: 1.4s ease;
   margin: 1em;
 }
-.container button:hover {
+.container button:hover, .boton-invitado:hover {
   background-color: #323133;
   color: white;
+}
+.boton-invitado{
+  width: 9.2rem;
 }
 .auth-form .login-link {
   margin-top: 1rem;
@@ -139,25 +143,3 @@ nav ul li button:hover {
     justify-content: center;
     align-items: center;
 } 
-
-
-.boton-invitado {
-  width: 7em;
-  margin-top: 0.6em;
-  padding: 0.75rem;
-  background-color: #F1E932;
-  border: none;
-  border-radius: 1em;
-  color: #323133;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 1.4s ease;
-  margin: 1em auto; /* Ajusta el margen para centrar horizontalmente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.boton-invitado:hover {
-  background-color: #EDE751;
-}
