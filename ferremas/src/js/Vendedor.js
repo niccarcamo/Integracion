@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../css/Vendedor.css'; // Archivo de estilos CSS para el componente
+import jsPDF from 'jspdf';
 
 const Vendedor = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,8 +32,25 @@ const Vendedor = () => {
 
   // Función para imprimir/descargar la boleta
   const handleInvoice = () => {
-    // Lógica para generar e imprimir/descargar la boleta
-    console.log('Generando boleta...');
+    // Calcular el total de la compra
+    const total = cart.reduce((acc, product) => acc + product.price, 0);
+
+    // Generar el contenido del PDF
+    const doc = new jsPDF();
+    doc.text('Boleta de Compra', 20, 10);
+
+    let y = 30;
+    cart.forEach((product, index) => {
+      const text = `${product.name} - $${product.price}`;
+      doc.text(text, 20, y);
+      y += 10;
+    });
+
+    // Agregar el total al final del documento
+    doc.text(`Total: $${total}`, 20, y + 10);
+
+    // Descargar el PDF
+    doc.save('boleta_compra.pdf');
   };
 
   // Función para enviar la boleta por correo
