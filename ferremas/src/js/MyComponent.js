@@ -208,8 +208,10 @@ function MyComponent() {
                 {producto.imagenProducto && (
                   <img src={producto.imagenProducto} alt={producto.nombreProducto} className="product-image" />
                 )}
+                {role === '1' && (
+
                 <button className="boton_producto" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
-                
+              )}
                 {role === '2' && (
                   <button 
                       className="editar"  
