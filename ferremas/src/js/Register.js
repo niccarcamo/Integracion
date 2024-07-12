@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../css/Registro.css';
 
 const Register = () => {
@@ -13,6 +13,16 @@ const Register = () => {
   });
   const [message, setMessage] = React.useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (!params.get('reloaded')) {
+      params.set('reloaded', 'true');
+      window.location.search = params.toString();
+    }
+  }, [location]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -59,8 +69,15 @@ const Register = () => {
   };
 
   const handleGuestLogin = () => {
-    // Redirige directamente a la página principal ("/") al hacer clic en "Iniciar como invitado"
     navigate('/');
+  };
+
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
   };
 
   return (
@@ -75,6 +92,7 @@ const Register = () => {
             value={form.nombreUsuario}
             onChange={handleChange}
             required
+            style={{ padding: '0.6rem 0.75rem' }} // Añadir padding para separar el texto del borde
           />
           <input
             type="password"
@@ -83,6 +101,7 @@ const Register = () => {
             value={form.contrasenaUsuario}
             onChange={handleChange}
             required
+            style={{ padding: '0.6rem 0.75rem' }} // Añadir padding para separar el texto del borde
           />
           <input
             type="email"
@@ -91,6 +110,7 @@ const Register = () => {
             value={form.emailUsuario}
             onChange={handleChange}
             required
+            style={{ padding: '0.6rem 0.75rem' }} // Añadir padding para separar el texto del borde
           />
           <input
             type="text"
@@ -99,19 +119,24 @@ const Register = () => {
             value={form.direccionUsuario}
             onChange={handleChange}
             required
+            style={{ padding: '0.6rem 0.75rem' }} // Añadir padding para separar el texto del borde
           />
           <div className="container">
             <button type="submit">Registrar</button>
           </div>
-          <div>
-            {/* Utiliza Link en lugar de button para redirigir directamente a la página principal */}
+          <div className="container">
             <Link to="/" className="boton-invitado" onClick={handleGuestLogin}>
               Iniciar como invitado
             </Link>
           </div>
           <div className="login-link">
-            <button type="button" onClick={() => navigate('/login')}>
-              Ya tengo una cuenta
+            <button
+              type="button"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => navigate('/login')}
+            >
+              {hovered ? 'Haz click aquí para iniciar sesión' : 'Ya tengo una cuenta'}
             </button>
           </div>
           <div className="container">
