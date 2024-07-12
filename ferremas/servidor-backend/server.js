@@ -5,6 +5,7 @@ const axios = require('axios');
 const { WebpayPlus } = require('transbank-sdk');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -144,6 +145,24 @@ app.post('/api/insertarProducto', authorize([2]), (req, res) => {
   });
 });
 
+// Ruta para crear un producto
+app.post('/api/productos', authorize([2]), (req, res) => {
+  const { nombreProducto, descProducto, precioProducto, stockProducto } = req.body;
+
+  const query = `
+    INSERT INTO Producto (nombreProducto, descProducto, precioProducto, stockProducto)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(query, [nombreProducto, descProducto, precioProducto, stockProducto], (err, result) => {
+    if (err) {
+      console.error('Error al crear producto:', err);
+      return res.status(500).send('Error al crear producto');
+    }
+    res.status(201).send('Producto creado exitosamente');
+  });
+});
+
 // Ruta para marcar un producto como agotado
 app.post('/api/marcarAgotado/:idProducto', authorize([2]), (req, res) => {
   const { idProducto } = req.params;
@@ -196,7 +215,6 @@ app.post('/api/crear-transaccion', async (req, res) => {
   }
 });
 
-
 // Ruta para verificar si un correo existe en la tabla de usuarios
 app.get('/api/verificar-correo', (req, res) => {
   const emailUsuario = req.query.email;
@@ -236,8 +254,7 @@ app.get('/api/productos/:id', authorize([2]), (req, res) => {
   });
 });
 
-// MODIFICAR PRODUCTO
-// Ruta para modificar un producto
+//modificar producto//
 app.put('/api/productos/modificar/:id', authorize([2]), (req, res) => {
   const idProducto = req.params.id;
   const { nombreProducto, descProducto, precioProducto, stockProducto } = req.body;
@@ -281,8 +298,6 @@ app.put('/api/usuarios/:id', (req, res) => {
     res.status(200).send(`Rol actualizado correctamente para el usuario ${idUsuario}`);
   });
 });
-
-
 
 // Ruta para obtener todos los usuarios con nombre de usuario, correo y rol
 app.get('/api/usuarios', (req, res) => {

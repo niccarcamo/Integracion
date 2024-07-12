@@ -13,8 +13,7 @@ import AdminComponent from './js/AdminComponent';
 import UserComponent from './js/UserComponent';
 import Vendedor from './js/Vendedor';
 import ModificarProducto from './js/ModificarProducto';
-import '../src/css/App.css'
-
+import '../src/css/App.css';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -34,8 +33,8 @@ function App() {
             </header>
             <main>
               <Routes>
-                <Route path="/MyComponent" element={<MyComponent />} />
                 <Route path="/" element={<Homepage />} />
+                <Route path="/MyComponent" element={<MyComponent />} />
                 <Route path="/admin" element={<AdminComponent />} />
                 <Route path="/usuario" element={<UserComponent />} />
                 <Route path="/vendedor" element={<Vendedor />} />
@@ -54,7 +53,7 @@ function App() {
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="*" element={<Navigate to="/register" />} />
+            <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         )}
       </div>

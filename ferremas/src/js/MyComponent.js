@@ -18,8 +18,12 @@ function MyComponent() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setToken(token);
-  }, []);
+    if (token) {
+      setToken(token);
+    } else {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     if (nombre.trim() !== '') {
@@ -27,7 +31,7 @@ function MyComponent() {
     } else {
       obtenerTodosLosProductos();
     }
-  }, [nombre, token]); // Agregar token a las dependencias
+  }, [nombre, token]);
 
   const obtenerTodosLosProductos = () => {
     axios.get('http://localhost:3001/api/productos', {
@@ -41,7 +45,7 @@ function MyComponent() {
       .catch(error => {
         if (error.response && error.response.status === 401) {
           console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
-          // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
+          navigate('/login');
         } else {
           console.error('Error al obtener los productos:', error);
         }
@@ -60,7 +64,7 @@ function MyComponent() {
       .catch(error => {
         if (error.response && error.response.status === 401) {
           console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
-          // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
+          navigate('/login');
         } else {
           console.error('Error al buscar productos:', error);
         }
@@ -180,52 +184,35 @@ function MyComponent() {
                   <li key={producto.idProducto}>
                     {producto.nombreProducto} - ${producto.precioProducto} x {producto.cantidad}
                     <div className="carrito-buttons">
-                      <button onClick={() => eliminarDelCarrito(producto.idProducto)}>-</button>
                       <button onClick={() => aumentarCantidad(producto.idProducto)}>+</button>
+                      <button onClick={() => eliminarDelCarrito(producto.idProducto)}>-</button>
                     </div>
                   </li>
                 ))}
-                <hr />
               </ul>
-
-              <p>Total a pagar: ${calcularTotal()}</p>
-              <button onClick={handlePagar}>Pagar con Webpay</button>
+              <div>Total: ${calcularTotal()}</div>
+              <button onClick={handlePagar}>Pagar</button>
             </div>
           )}
         </div>
       </div>
 
-      <ul className="product-list">
-        {productos.map(producto => (
-          <li key={producto.idProducto}>
-            <div className="product-card">
-              <h2 className="product-card-title">{producto.nombreProducto}</h2>
-              <div className="product-card-content">
-                <p>ID: {producto.idProducto}</p>
-                <p>{producto.descProducto}</p>
-                <p>Precio: ${producto.precioProducto}</p>
-                <p>Stock: {producto.stockProducto}</p>
-                {producto.imagenProducto && (
-                  <img src={producto.imagenProducto} alt={producto.nombreProducto} className="product-image" />
-                )}
-                {role === '1' && (
-
-                <button className="boton_producto" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
-              )}
-                {role === '2' && (
-                  <button 
-                      className="editar"  
-                      style={{ marginLeft: '1em', padding: '.4em .8em' }}
-                      onClick={() => handleEditClick(producto.idProducto)}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                  </button>
-                )}
-              </div>
-            </div>
-          </li>
+      <div className="productos-container">
+        {productos.map((producto) => (
+          <div className="producto" key={producto.idProducto}>
+            <img src={producto.imagenProducto} alt={producto.nombreProducto} />
+            <h3>{producto.nombreProducto}</h3>
+            <p>{producto.descripcionProducto}</p>
+            <p>${producto.precioProducto}</p>
+            <button onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
+            {role === '2' && ( // Mostrar el botón solo si el usuario es administrador
+              <button onClick={() => handleEditClick(producto.idProducto)}>
+                <FontAwesomeIcon icon={faPenToSquare} className="icono_carrito" style={{ color: "#323133" }} />
+              </button>
+            )}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
