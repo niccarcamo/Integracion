@@ -13,8 +13,9 @@ function MyComponent() {
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
   const [token, setToken] = useState('');
+  const [searchBy, setSearchBy] = useState('nombre');
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -52,22 +53,40 @@ function MyComponent() {
   };
 
   const buscarProductos = () => {
-    axios.get(`http://localhost:3001/api/buscar-productos?nombre=${nombre}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(response => {
-        setProductos(response.data);
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 401) {
-          console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
-          // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
-        } else {
-          console.error('Error al buscar productos:', error);
+    if (searchBy === 'nombre') {
+      axios.get(`http://localhost:3001/api/buscar-productos?nombre=${nombre}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      });
+      })
+        .then(response => {
+          setProductos(response.data);
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 401) {
+            console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
+            // Aquí puedes redirigir a la página de inicio de sesión u otra acción adecuada
+          } else {
+            console.error('Error al buscar productos:', error);
+          }
+        });
+    } else if (searchBy === 'id') {
+      axios.get(`http://localhost:3001/api/productos/${nombre}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => {
+          setProductos([response.data]); // Se envuelve en un array para mantener la estructura
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 401) {
+            console.error('Acceso no autorizado. Redirigiendo a la página de inicio de sesión.');
+          } else {
+            console.error('Error al buscar producto por ID:', error);
+          }
+        });
+    }
   };
 
   const añadirAlCarrito = (producto) => {
@@ -116,7 +135,7 @@ function MyComponent() {
 
   const handleEditClick = (idProducto) => {
     navigate(`/modificar-producto/${idProducto}`);
-  };  
+  };
 
   const handlePagar = async () => {
     if (carrito.length === 0) {
@@ -162,12 +181,20 @@ function MyComponent() {
   return (
     <div>
       <div className="busqueda">
-        <div className="input-container">
+      <div className="input-container">
+          <select
+            value={searchBy}
+            onChange={(e) => setSearchBy(e.target.value)}
+            className="input_select"
+          >
+            <option value="nombre">Nombre</option>
+            <option value="id">ID</option>
+          </select>
           <input
             type="text"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
-            placeholder="Ingrese nombre del producto"
+            placeholder={`Ingrese ${searchBy === 'nombre' ? 'nombre' : 'ID'} del producto`}
             className="input_buscar"
           />
         </div>
@@ -212,16 +239,15 @@ function MyComponent() {
                   <img src={producto.imagenProducto} alt={producto.nombreProducto} className="product-image" />
                 )}
                 {role === '1' && (
-
-                <button className="boton_producto" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
-              )}
+                  <button className="boton_producto" onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
+                )}
                 {role === '2' && (
                   <button 
-                      className="editar"  
-                      style={{ marginLeft: '1em', padding: '.4em .8em' }}
-                      onClick={() => handleEditClick(producto.idProducto)}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
+                    className="editar"  
+                    style={{ marginLeft: '1em', padding: '.4em .8em' }}
+                    onClick={() => handleEditClick(producto.idProducto)}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
                 )}
               </div>
