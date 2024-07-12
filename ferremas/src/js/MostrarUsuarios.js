@@ -33,26 +33,55 @@ const MostrarUsuarios = () => {
     }
   };
 
+  const styles = {
+    usuariosContainer: {
+      margin: '20px',
+    },
+    table: {
+      width: '100%',
+      borderCollapse: 'collapse',
+    },
+    th: {
+      border: '1px solid #dddddd',
+      textAlign: 'left',
+      padding: '8px',
+      backgroundColor: '#f2f2f2',
+    },
+    td: {
+      border: '1px solid #dddddd',
+      textAlign: 'left',
+      padding: '8px',
+    },
+    btnActualizar: {
+      backgroundColor: '#4CAF50',
+      color: 'white',
+      padding: '8px 12px',
+      border: 'none',
+      cursor: 'pointer',
+      borderRadius: '4px',
+    },
+  };
+
   return (
-    <div>
+    <div style={styles.usuariosContainer}>
       <h2>Mostrar Usuarios</h2>
-      <table>
+      <table style={styles.table}>
         <thead>
           <tr>
-            <th>Nombre de Usuario</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Cambiar Rol</th>
-            <th>Actualizar</th>
+            <th style={styles.th}>Nombre de Usuario</th>
+            <th style={styles.th}>Email</th>
+            <th style={styles.th}>Rol</th>
+            <th style={styles.th}>Cambiar Rol</th>
+            <th style={styles.th}>Actualizar</th>
           </tr>
         </thead>
         <tbody>
           {usuarios.map(usuario => (
             <tr key={usuario.idUsuario}>
-              <td>{usuario.nombreUsuario}</td>
-              <td>{usuario.emailUsuario}</td>
-              <td>{usuario.Rol_idRol}</td>
-              <td>
+              <td style={styles.td}>{usuario.nombreUsuario}</td>
+              <td style={styles.td}>{usuario.emailUsuario}</td>
+              <td style={styles.td}>{usuario.Rol_idRol}</td>
+              <td style={styles.td}>
                 <select
                   value={usuario.Rol_idRol}
                   onChange={(e) => handleChangeRol(usuario.idUsuario, e.target.value)}
@@ -62,8 +91,8 @@ const MostrarUsuarios = () => {
                   <option value={3}>Rol 3</option>
                 </select>
               </td>
-              <td>
-                <button onClick={() => handleSubmit(usuario.idUsuario, usuario.Rol_idRol)}>
+              <td style={styles.td}>
+                <button style={styles.btnActualizar} onClick={() => handleSubmit(usuario.idUsuario, usuario.Rol_idRol)}>
                   Actualizar
                 </button>
               </td>
