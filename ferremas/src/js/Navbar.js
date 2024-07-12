@@ -2,9 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoutButton from './LogoutButton';
 
-const role = localStorage.getItem('role');
-
 const Navbar = ({ isAdmin }) => {
+  const isLoggedIn = !!localStorage.getItem('token'); // Verifica si hay un token
+
+  if (!isLoggedIn) {
+    return null; // Si no hay sesión, no se muestra el Navbar
+  }
+
+  const role = localStorage.getItem('role');
+
   return (
     <nav style={styles.navbar}>
       <ul style={styles.navbarUl}>
@@ -12,16 +18,14 @@ const Navbar = ({ isAdmin }) => {
         <li style={styles.navbarLi}><Link to="/MyComponent">Herramienta</Link></li>
         {isAdmin && <li style={styles.navbarLi}><Link to="/crear-producto">Crear Producto</Link></li>}
         {isAdmin && <li style={styles.navbarLi}><Link to="/mostrar-usuarios">Mostrar Usuarios</Link></li>}
-
         
         {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
 
         <li style={{ ...styles.navbarLi, marginLeft: 'auto' }}>
+          Bienvenido {role === '2' ? 'Administrador' : role === '3' ? 'Vendedor' : 'Usuario'}
         </li>
-        <li>Bienvenido {role === '2' ? 'Administrador' : role === '3' ? 'Vendedor' : 'Usuario'}</li>
         <LogoutButton style={styles.logoutLink} />
       </ul>
-      
     </nav>
   );
 };
