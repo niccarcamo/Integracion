@@ -19,6 +19,36 @@
 }
 .input-container {
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.input_select {
+  margin-right: 10px;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.input_select:hover {
+  border-color: #5b5a5c;
+  background-color: #f7f7f7;
+  border: 2px solid #686769;
+  box-shadow: 0 0 10px #8b8a8a;
+}
+
+.input_select:focus {
+  color: var(--color1);
+  background-color: #afaeaf;
+  border-color: var(--color1);
+  box-shadow: 0 0 10px #5c5c5c;
+  border: 2px solid #f0eaea;
+}
+.input_select option {
+  background-color: #fff;
+  color: #333;
+  padding: 1rem;
 }
 .input_buscar{
   display: block;
