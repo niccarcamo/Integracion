@@ -236,7 +236,7 @@ app.get('/api/verificar-correo', (req, res) => {
 });
 
 // BUSCAR POR ID PRODUCTO
-app.get('/api/productos/:id', authorize([2]), (req, res) => {
+app.get('/api/productos/:id', authorize([1,2]), (req, res) => {
   const idProducto = req.params.id;
   const query = `SELECT * FROM Producto WHERE idProducto = ?`;
 
