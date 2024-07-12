@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../css/Vendedor.css'; // Archivo de estilos CSS para el componente
 
 const Vendedor = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -41,10 +42,10 @@ const Vendedor = () => {
   };
 
   return (
-    <div>
+    <div className="vendedor-container">
       <h1>Panel de Vendedor</h1>
-      
-      <div>
+
+      <div className="search-container">
         <input
           type="text"
           placeholder="Buscar producto por ID o nombre"
@@ -54,26 +55,26 @@ const Vendedor = () => {
         <button onClick={handleSearch}>Buscar</button>
       </div>
 
-      <div>
+      <div className="results-container">
         <h2>Resultados de Búsqueda</h2>
         {searchResults.map((product) => (
-          <div key={product.id}>
+          <div key={product.id} className="product-item">
             <p>{product.name} - ${product.price}</p>
             <button onClick={() => addToCart(product)}>Agregar al Carrito</button>
           </div>
         ))}
       </div>
 
-      <div>
+      <div className="cart-container">
         <h2>Carrito de Compras</h2>
         {cart.map((product, index) => (
-          <div key={index}>
+          <div key={index} className="cart-item">
             <p>{product.name} - ${product.price}</p>
           </div>
         ))}
       </div>
 
-      <div>
+      <div className="actions-container">
         <button onClick={handlePayment}>Pagar</button>
         <button onClick={handleInvoice}>Imprimir/Descargar Boleta</button>
         <button onClick={handleSendInvoice}>Enviar Boleta por Correo</button>
