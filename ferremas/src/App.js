@@ -1,6 +1,5 @@
-import React from 'react';
-import './css/App.css';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './js/Navbar';
 import CrearProducto from './js/CrearProducto';
 import MostrarUsuarios from './js/MostrarUsuarios';
@@ -14,6 +13,8 @@ import PrivateRoute from './PrivateRoute';
 import AdminComponent from './js/AdminComponent';
 import UserComponent from './js/UserComponent';
 import Vendedor from './js/Vendedor';
+import { useLocation } from 'react-router-dom';
+import '../src/css/App.css'
 
 
 function App() {
@@ -29,13 +30,10 @@ function App() {
         {token ? (
           <>
             <header>
-            <div className="logo-container">
-                <img className="Logo" id='Logo' src="/assets/Logoferremas.png" alt="Logo Ferremas" />
-              </div>
+              <h1>Bienvenido a Ferretería Ferremas</h1>
               <HeaderIndicators />
-              <nav class="nav-style">
+              <nav>
                 <ul>
-                  {role === '3' && <li><Link to="/vendedor">Vendedor</Link></li>}
                 </ul>
               </nav>
             </header>
@@ -53,7 +51,7 @@ function App() {
               </Routes>
             </main>
             <footer>
-              <p class="footer-letter">&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
+              <p>&copy; 2024 Ferretería Ferremas. Todos los derechos reservados.</p>
             </footer>
           </>
         ) : (
@@ -69,6 +67,17 @@ function App() {
 }
 
 function Homepage() {
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (!params.get('reloaded')) {
+      params.set('reloaded', 'true');
+      window.location.search = params.toString();
+    }
+  }, [location]);
+
   return (
     <>
       <CarouselComponent />
